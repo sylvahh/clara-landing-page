@@ -3,6 +3,10 @@ import MarketDropDown from '../components/MarketsDropdown';
 import TopNav from '../components/TopNav';
 import blenco from '../assets/blenco.png';
 import supermarket from '../assets/supermarket.png';
+import ladyInCart from '../assets/ladyn\'cart.png';
+import vectorYellow from '../assets/Vector~yellow.png';
+
+
 import Cards from '../components/cards/Cards';
 
 const HomePage = () => {
@@ -10,17 +14,15 @@ const HomePage = () => {
     <Fragment>
       <TopNav />
 
-      <div className='flex  justify-between mt-[6rem] px-5 sm:px-10'>
-        <div className='w-full text-[55px]'>
+      <div className='flex  justify-between space-x-10 mt-[6rem] px-5 sm:px-10'>
+        <div className='w-full text-[24px] md:text-[35px] lg:text-[55px]'>
           <h1>
             Shop from your <span className='text-primary  underline'> favourite supermarket</span>{' '}
             right here
           </h1>
         </div>
-        {/* <div className='w-fu  text-center bg-black'> */}
 
         <MarketDropDown />
-        {/* </div> */}
       </div>
       <div className='px-5 sm:px-10 my-[10rem]'>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-20'>
@@ -28,6 +30,43 @@ const HomePage = () => {
           <Cards title='Supermarkets in Lagos Mainland' image={supermarket} />
         </div>
         <div className='flex justify-end my-10 sm:pr-10'> <a href="/" className='text-lg font-semibold text-primary hover:text-secondary  hover:-translate-y-1 transition-all py-5 '> See all supermarkets &gt;&gt; </a></div>
+      </div>
+
+      <div className='bg-cards p-5  sm:p-10'>
+        <div className="relative flex flex-col  lg:flex-row  items-center justify-between ">
+        <div className='text-[24px]  sm:text-[55px] lg:absolute top-0 left-[40%] w-fit'>
+              
+              <h1>
+              Order from your <span className='text-tertiary underline'> favourite supermarket</span>{' '}
+             <span className=' text-black-sub'> online</span>
+            </h1>
+            </div>
+          <div className=' w-100 lg:w-[60%]'>
+
+          <img src={ladyInCart} alt="lady in cart" className='w-[100%]' />
+          </div>
+          <div className='flex flex-col md:flex-row lg:flex-col space-y-10 lg:space-y-0 lg:h-[100vh]  justify-center box-border '>
+            {/* <div className='text-[24px]  sm:text-[55px] lg:absolute top-0 left-[40%] w-fit'>
+              
+            <h1>
+            Order from your <span className='text-tertiary underline'> favourite supermarket</span>{' '}
+           <span className=' text-black-sub'> online</span>
+          </h1>
+          </div> */}
+            <div className='flex flex-col space-y-3 items-start h-full  justify-center mt-20'>
+
+            <input type="text" placeholder='Enter name of supermarket' className='rounded-md border  py-1 border-secondary w-[75%] md:w-full lg:w-[60%] placeholder:text-center ' />
+            <small className='font-semibold'>Can’t find your favourite Supermarket? <a href="/" className='text-secondary font-bold underline hover:text-primary'> Send us the name</a></small>
+            </div>
+
+            <div className=' flex justify-start sm:justify-end '>
+
+
+            <img src={vectorYellow} alt="vector" className='w-[75%] ' />
+            </div>
+          </div>
+        </div>
+
       </div>
     </Fragment>
   );

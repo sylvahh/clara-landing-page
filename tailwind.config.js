@@ -12,6 +12,7 @@ module.exports = {
         secondary: '#182C32',
         tertiary: '#007400',
         cards: ' #E9E9E9',
+        'black-sub': 'rgba(75, 75, 75, 1)',
       },
       fontFamily: {
         mulish: ['mulish'],
