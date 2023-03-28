@@ -11,7 +11,7 @@ module.exports = {
         primary: '#FFA500',
         secondary: '#182C32',
         tertiary: '#007400',
-        navlinks: '#DDE2FF',
+        cards: ' #E9E9E9',
       },
       fontFamily: {
         mulish: ['mulish'],

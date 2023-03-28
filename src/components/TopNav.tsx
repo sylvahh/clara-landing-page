@@ -1,8 +1,8 @@
 import React from 'react'
-import logo from '../assests/logo~green.png'
+import logo from '../assets/logo~green.png'
 const TopNav = () => {
   return (
-      <header className=' bg-primary sticky top-0 px-5 sm:px-10  py-3'>
+      <header className=' bg-primary sticky top-0 px-5 sm:px-10  py-3 z-40'>
           <div className="flex justify-between   items-center">
               <a href="" className='w-full  sm:w-auto'>
                   
@@ -18,4 +18,4 @@ const TopNav = () => {
   )
 }
 
-export default TopNav
+export default React.memo(TopNav)

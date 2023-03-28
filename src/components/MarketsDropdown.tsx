@@ -77,15 +77,15 @@ const MarketDropDown = () => {
   };
 
   return (
-    <div className="relativ z-40 w-[100%]  mx-auto">
+    <div className="relative   w-full flex justify-end items-start   ">
   
 
       {/* MarketDropDown button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between capitalize w-[40%] sm:w-[50%] px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md shadow-md hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-2"
+        className={`flex items-center justify-between capitalize w-[40%] sm:w-[50%] px-4 py-2 text-sm font-medium text-gray-700 bg-cards rounded-md shadow-md hover:bg-gray-50 focus:outline-none ${isOpen && 'focus:ring-1'} focus:ring-primary focus:ring-offset-2`}
       >
-        { selectedOptionIndex === 0 ?  'Select Area':  selectedOption.label}
+        { selectedOptionIndex === 0 ?  'Select Your Area':  selectedOption.label}
         <svg
           className="w-4 h-4 ml-2 -mr-1"
           xmlns="http://www.w3.org/2000/svg"
@@ -103,12 +103,12 @@ const MarketDropDown = () => {
 
       {/* MarketDropDown options */}
       <div
-        className={`absolute z-50 w-[40%] sm:w-[50%] mt-2 bg-white rounded-md shadow-lg ${
+        className={`absolute top-10  w-[40%] sm:w-[50%] mt-2 bg-white rounded-md shadow-lg ${
           isOpen ? 'block' : 'hidden'
         }`}
       >
         <ul
-          className="p-1 overflow-auto text-base leading-6 shadow-xs max-h-48 focus:outline-none sm:text-sm sm:leading-5"
+          className="p-1 overflow-auto text-base leading-6 shadow-xs max-h-56 focus:outline-none sm:text-sm sm:leading-5"
           tabIndex={-1}
           role="menu"
           aria-label="MarketDropDown menu"
