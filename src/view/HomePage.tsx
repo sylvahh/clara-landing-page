@@ -8,6 +8,7 @@ import vectorYellow from '../assets/Vector~yellow.png';
 import vectorGreen from '../assets/Vector~green.png';
 
 import Cards from '../components/cards/Cards';
+import Carousel from '../components/carousel/Carousel';
 
 const HomePage = () => {
   return (
@@ -98,6 +99,16 @@ const HomePage = () => {
               <img src={vectorGreen} alt='vector' className='w-[50%] sm:w-[20%]  sm:ml-[12rem]' />
             </div>
         </div>
+      </div>
+
+      {/* secttion 4 */}
+
+      <div className='bg-cards'>
+  
+
+<Carousel/>
+
+
       </div>
     </Fragment>
   );
