@@ -6,6 +6,7 @@ import supermarket from '../assets/supermarket.png';
 import ladyInCart from "../assets/ladyn'cart.png";
 import vectorYellow from '../assets/Vector~yellow.png';
 import vectorGreen from '../assets/Vector~green.png';
+import motherAndSon from '../assets/son-Mom.png';
 
 import Cards from '../components/cards/Cards';
 import Carousel from '../components/carousel/Carousel';
@@ -78,7 +79,7 @@ const HomePage = () => {
         </div>
       </div>
       {/* section 3 */}
-      <div className='bg-[#F5F5F5] px-5 sm:px-10 pt-20 sm:pt-[10rem]'>
+      <div className='bg-[#F5F5F5] px-5 sm:px-10 pt-20 pb-10 sm:pt-[10rem]'>
         <div className='flex flex-col items-center space-y-10 '>
           <div className='text-[24px] md:text-[35px] lg:text-[55px]'>
             <h1 className='inline font-extrabold '> We deliver</h1>
@@ -93,22 +94,33 @@ const HomePage = () => {
               {' '}
               Shop from 150+ stores near you
             </button>
-
           </div>
-            <div className='flex justify-end sm:justify-start w-full'>
-              <img src={vectorGreen} alt='vector' className='w-[50%] sm:w-[20%]  sm:ml-[12rem]' />
-            </div>
+          <div className='flex justify-end sm:justify-start w-full'>
+            <img src={vectorGreen} alt='vector' className='w-[50%] sm:w-[20%]  sm:ml-[12rem]' />
+          </div>
         </div>
       </div>
 
       {/* secttion 4 */}
 
-      <div className='bg-cards'>
-  
+      <div className='bg-cards px-5 sm:p-10'>
+        <div className=' flex flex-col justify-between sm:flex-row items-sta'>
+          <h1 className=' sm:hidden capitalize text-[45px] font-semibold text-black'>
+            shoppers reviews{' '}
+          </h1>
 
-<Carousel/>
-
-
+          <div className=' sm:-order-first  text-right sm:w-[60%]  '>
+            <img src={motherAndSon} alt='mother and son' className='sm:w-[75%] mx-auto' />
+          </div>
+          <div className='flex flex-col justify-center  space-y-10 items-center w-full sm:w-[40%] '>
+            <h1 className='hidden sm:block  capitalize text-[45px] font-semibold text-black'>
+              shoppers reviews{' '}
+            </h1>
+            <div className='w-full'>
+              <Carousel />
+            </div>
+          </div>
+        </div>
       </div>
     </Fragment>
   );

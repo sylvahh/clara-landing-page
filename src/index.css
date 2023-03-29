@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.alice-carousel__dots-item{
+    border: 1px solid black !important;
+    padding: 5px;
+}
+
+.alice-carousel__dots-item:not(.__custom):hover, .alice-carousel__dots-item:not(.__custom).__active {
+    background-color: #FFA500 !important;
+  }
+  
+
+/* .alice-carousel__dots-item:not(.__custom) .__active {
+    
+    background-color: #6fdb10 !important;
+} */
+
+
+/* <li class="alice-carousel__dots-item"></li> */
+
+/* <li class="alice-carousel__dots-item __active"></li> */
+.alice-carousel__dots{
+    display: none;
+}
+
+@media only screen and (min-width:600px) {
+    .alice-carousel__dots{
+        display: block;
+    }
+}
