@@ -137,7 +137,7 @@ const HomePage = () => {
         </div>
 
         <div id='yellow-bg' className=' mt-20 relative'>
-          <div className=' w-full text-center absolute top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-black'>
+          <div className=' w-full text-center absolute position top-[50%]  left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-black'>
             <div className='flex flex-col  justify-center'>
               <img src={handshake} alt='handshake' className='w-[50%] sm:w-[25%] mx-auto' />
               <h1 className='text-[24px] md:text-[35px] lg:text-[55px] text-white'>
@@ -146,15 +146,15 @@ const HomePage = () => {
             </div>
 
             <div className='flex flex-col sm:flex-row justify-between my-[10rem] space-y-10  sm:space-y-0 '>
-              <div className='text-center space-y-5 px-20'>
+              <div className='text-center space-y-5 px-20 md:px-10 lg:px-20'>
                 <img src={deviceShop} alt='house' className='w-[40%] mx-auto' />
                 <h4 className='font-bold text-2xl '>Register your Supermarket</h4>
               </div>
-              <div className='text-center space-y-5 px-20'>
-                <img src={reseller} alt='avatar' className='w-[40%] mx-auto' />
+              <div className='text-center space-y-5 px-20 md:px-10 lg:px-20'>
+                <img src={reseller} alt='avatar' className='w-[40%] md:w-[] mx-auto' />
                 <h4 className='font-bold text-2xl '>Become a Delivery partnert</h4>
               </div>
-              <div className='text-center space-y-5 px-20'>
+              <div className='text-center space-y-5 px-20 md:px-10 lg:px-20'>
                 <img src={constructionWorker} alt=' man working ' className='w-[40%] mx-auto' />
                 <h4 className='font-bold text-2xl '>Work with Us</h4>
               </div>
@@ -162,7 +162,7 @@ const HomePage = () => {
 
             {/* footer */}
 <hr  className='border-black-sub mx-10'/>
-            <div className=' flex justify-between  space-y-5 sm:space-y-0 flex-wrap px-10 sm:px-10 pt-10'>
+            <div className=' bg-primary flex justify-between  space-y-5 sm:space-y-0 flex-wrap px-10 sm:px-10 pt-10'>
               <div className='flex flex-col  justify-center space-y-2 items-start '>
                 <div className='pb-5'>
                 <img src={logo} alt='logo' className='w-[45%] sm:w-[75%]' />

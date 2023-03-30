@@ -36,6 +36,43 @@
  
     #yellow-bg {
         background-position: center; 
-        height: 225vh;
+        /* height: 225vh; */
     }
+    .position{
+        /* top: 50 !important% */
+        }  
+
+}
+
+
+@media only screen and (width:412px) {
+
+.position{
+top: 50%;
+}    
+}
+
+
+@media only screen and (max-width:915px) {
+ 
+    /* #yellow-bg {
+        background-position: center; 
+        height: 225vh;
+    } */
+
+.position{
+top: 75%
+}    
+}
+
+@media only screen and (max-width:915px) {
+ 
+    #yellow-bg {
+        background-position: center; 
+        height: 100vh;
+    }
+/* 
+.position{
+top: 75%
+}     */
 }
