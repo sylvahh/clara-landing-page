@@ -12,16 +12,6 @@
     background-color: #FFA500 !important;
   }
   
-
-/* .alice-carousel__dots-item:not(.__custom) .__active {
-    
-    background-color: #6fdb10 !important;
-} */
-
-
-/* <li class="alice-carousel__dots-item"></li> */
-
-/* <li class="alice-carousel__dots-item __active"></li> */
 .alice-carousel__dots{
     display: none;
 }
@@ -29,5 +19,23 @@
 @media only screen and (min-width:600px) {
     .alice-carousel__dots{
         display: block;
+    }
+}
+
+
+#yellow-bg {
+    background-image: url(./assets/yellowBg.svg);
+    /* background-position: right bottom, left top; */
+    /* background-position: center; */
+    background-size: cover;
+    background-repeat: no-repeat, repeat;
+    height: 200vh;
+  }
+
+  @media only screen and (max-width:600px) {
+ 
+    #yellow-bg {
+        background-position: center; 
+        height: 225vh;
     }
 }
