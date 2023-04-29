@@ -77,17 +77,17 @@ const MarketDropDown = () => {
   };
 
   return (
-    <div className="relative   w-full flex justify-end items-start   ">
+    <div className="relative w-full flex justify-end items-start   ">
   
 
       {/* MarketDropDown button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-between capitalize w-[100%] sm:w-[50%] px-4 py-2 text-sm font-medium text-gray-700 bg-cards rounded-md shadow-md hover:bg-gray-50 focus:outline-none ${isOpen && 'focus:ring-1'} focus:ring-primary focus:ring-offset-2`}
+        className={`flex items-center justify-between capitalize w-[100%] sm:w-[50%] px-1 sm:px-4 py-2 text-sm font-medium text-gray-700 bg-cards rounded-md shadow-md hover:bg-gray-50 focus:outline-none ${isOpen && 'focus:ring-1'} focus:ring-primary focus:ring-offset-2`}
       >
         { selectedOptionIndex === 0 ?  'Select Your Area':  selectedOption.label}
         <svg
-          className="w-4 h-4 ml-2 -mr-1"
+          className="w-4 h-4 "
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"

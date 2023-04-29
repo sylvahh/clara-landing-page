@@ -22,57 +22,6 @@
     }
 }
 
-
-#yellow-bg {
-    background-image: url(./assets/yellowBg.svg);
-    /* background-position: right bottom, left top; */
-    /* background-position: center; */
-    background-size: cover;
-    background-repeat: no-repeat, repeat;
-    height: 200vh;
-  }
-
-  @media only screen and (max-width:600px) {
- 
-    #yellow-bg {
-        background-position: center; 
-        /* height: 225vh; */
-    }
-    .position{
-        /* top: 50 !important% */
-        }  
-
-}
-
-
-@media only screen and (width:412px) {
-
-.position{
-top: 50%;
-}    
-}
-
-
-@media only screen and (max-width:915px) {
- 
-    /* #yellow-bg {
-        background-position: center; 
-        height: 225vh;
-    } */
-
-.position{
-top: 75%
-}    
-}
-
-@media only screen and (max-width:915px) {
- 
-    #yellow-bg {
-        background-position: center; 
-        height: 100vh;
-    }
-/* 
-.position{
-top: 75%
-}     */
+.scrolled {
+    background-color: #fff !important;
 }

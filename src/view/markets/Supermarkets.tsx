@@ -1,13 +1,12 @@
 import React from 'react';
-import SupermarketsCards from '../components/cards/SupermarketsCards';
-import blencoLogo from '../assets/blenco~logo.png';
-import blencoImg from '../assets/blenco~image.png';
-import image1 from '../assets/image1.png';
-import shopLogo1 from '../assets/shop~logo1.png';
-import image2 from '../assets/image2.png';
-import shopLogo2 from '../assets/shop~logo2.png';
-import adImg from '../assets/ad~image.png';
-
+import SupermarketsCards from '../../components/cards/SupermarketsCards';
+import blencoLogo from '../../assets/blenco~logo.png';
+import blencoImg from '../../assets/blenco~image.png';
+import image1 from '../../assets/image1.png';
+import shopLogo1 from '../../assets/shop~logo1.png';
+import image2 from '../../assets/image2.png';
+import shopLogo2 from '../../assets/shop~logo2.png';
+import adImg from '../../assets/ad~image.png';
 
 const Supermarkets = () => {
   return (
@@ -18,7 +17,7 @@ const Supermarkets = () => {
         </h1>
         <small>Select Supermarket and start shopping</small>
         <small className='text-right block '>
-          Can’t find your favourite Supermarket?{' '} <br />
+          Can’t find your favourite Supermarket? <br />
           <a
             href='/'
             className=' font-semibold  underline  decoration-tertiary hover:decoration-primary '
@@ -29,9 +28,10 @@ const Supermarkets = () => {
         </small>
       </div>
 
-      <div className='grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-20 my-10 sm:my-20'>
+      <div className='grid grid-cols-2 sm:grid-cols-4 gap-5 sm:gap-20 my-10 sm:my-20'>
         <SupermarketsCards image={image1} logo={shopLogo1} />
         <SupermarketsCards image={blencoImg} logo={blencoLogo} />
+        <SupermarketsCards image={image2} logo={shopLogo2} />
         <SupermarketsCards image={image2} logo={shopLogo2} />
       </div>
 
@@ -41,18 +41,19 @@ const Supermarkets = () => {
       </a>
 
       <div className='absolute left-0  bg-primary flex justify-between  w-full mt-5 sm:mt-10 px-5 sm:px-10 shadow-sm'>
-              <small className='text-white underline decoration-white  '>Ad</small>
-              <img src={adImg} alt="ad" className='w-[25%] sm:w-[10%] ' />
+        <small className='text-white underline decoration-white  '>Ad</small>
+        <img src={adImg} alt='ad' className='w-[25%] sm:w-[10%] ' />
         <h1 className='text-[16px] md:text-[35px] lg:text-[50px] text-center font-semibold '>
           Enjoy 15% discount on all Indomie Noodles
         </h1>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-20 my-[8rem] sm:my-[12rem]">
-              <SupermarketsCards image={image1} logo={shopLogo1} />
-              <SupermarketsCards image={blencoImg} logo={blencoLogo} />
-              <SupermarketsCards image={image2} logo={shopLogo2} />
-          </div>
+      </div>
+
+      <div className='grid grid-cols-2 sm:grid-cols-4 gap-5 sm:gap-20 my-[8rem] sm:my-[12rem]'>
+        <SupermarketsCards image={image1} logo={shopLogo1} />
+        <SupermarketsCards image={blencoImg} logo={blencoLogo} />
+        <SupermarketsCards image={image2} logo={shopLogo2} />
+        <SupermarketsCards image={image2} logo={shopLogo2} />
+      </div>
     </section>
   );
 };
