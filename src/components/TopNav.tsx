@@ -39,7 +39,7 @@ const TopNav = () => {
   }, []);
 
   return (
-    <Fragment>
+    <Fragment >
       <header className='  fixed top-0 left-0 right-0   pb-10 backdrop-blur-[0.8px]  z-40'>
         <div className={`${checks()} px-5  transition-all  `}>
           <div className='flex justify-between    items-center'>
@@ -63,7 +63,7 @@ const TopNav = () => {
         <SideDrawer showDrawer={showDrawer} closeDrawer={setShowDrawer} />
 
       {/* mobile view */}
-      <div className='w-[100%]   fixed bottom-0 bg-primary'>
+      <div className={`${!hasSubNav && 'hidden'} w-[100%]   fixed bottom-0 bg-primary`}>
         <div className='flex justify-between px-5 py-5 sm:px-10 w-[100%]  transition-all  sm:text-xl  sm:w-auto lg:hidden'>
           <button  onClick={()=> setShowDrawer(!showDrawer)}  className=' text-black flex items-center  space-x-1  bg-transparent  hover:text-tertiary  transition-all'>
             {' '}
