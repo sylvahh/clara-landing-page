@@ -12,7 +12,7 @@ const SupermarketsCards = (props: Props) => {
           
     <img src={logo} alt="" className='w-[50%]  mx-auto' />
 
-<a href='/' className='font-semibold text-lg  text-left  hover:text-primary transition-all'> Start shopping  &gt;&gt;</a>
+<a href='/supermarket' className='font-semibold text-lg  text-left  hover:text-primary transition-all'> Start shopping  &gt;&gt;</a>
 
 </button>
   )

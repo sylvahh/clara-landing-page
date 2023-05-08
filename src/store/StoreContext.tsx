@@ -16,9 +16,12 @@ type Option = {
 const StoreContext = React.createContext({
     items:[] as CartItem[],
   totalAmount: 0,
+  
     options:[] as Option[],
     addItem: (item: CartItem) => { },
-    removeItem: (id: string)=>{}
+  removeItem: (id: string) => { },
+  // localMarkets: [],
+  // superMarkets: []
 })
 
 export default StoreContext

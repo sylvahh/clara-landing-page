@@ -5,6 +5,7 @@ import TopNav from './components/TopNav';
 import HomePage from './view/HomePage';
 import Supermarkets from './view/markets/Supermarkets';
 import LocalMarket from './view/markets/LocalMarkets';
+import Supermarket from './view/markets/Supermarket';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/supermarkets' element={<Supermarkets />} />
         <Route path='/localmarkets' element={<LocalMarket />} />
-
+        <Route path='/supermarket' element={<Supermarket />} />
       </Routes>
     </div>
   );

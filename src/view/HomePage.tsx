@@ -47,7 +47,10 @@ const HomePage = () => {
             </h1>
           </div>
 
-          <MarketDropDown />
+          <div className='w-[50%]'>
+
+          <MarketDropDown  />
+          </div>
         </div>
         <div className='px-5 sm:px-10 my-20 sm:my-[10rem]'>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-20'>

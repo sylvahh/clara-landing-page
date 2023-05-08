@@ -178,12 +178,14 @@ const StoreProvider: React.FC<StoreProviderProps> = (props) => {
     dispatchCartAction({ type: 'REMOVE', id: id });
   };
 
+
   const storeContextValue = {
     items: storeState.items,
     totalAmount: storeState.totalAmount,
     options: storeOptions,
     addItem: addItemHandler,
     removeItem: removeItem,
+    // localMarkets: 
   };
 
   return <StoreContext.Provider value={storeContextValue}>{props.children}</StoreContext.Provider>;
