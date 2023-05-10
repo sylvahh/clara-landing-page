@@ -11,6 +11,7 @@ function App() {
   return (
     <div className='App'>
       <TopNav />
+      <div className='w-full py-10 mt-[8rem]'> </div>
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/supermarkets' element={<Supermarkets />} />

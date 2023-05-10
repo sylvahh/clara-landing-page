@@ -14,9 +14,12 @@ module.exports = {
         cards: ' #E9E9E9',
         'black-sub': 'rgba(75, 75, 75, 1)',
         'tertiary-100': '#3BB77E',
+        'alt-sec': '#253D4E',
+        'alt-tertiary': '#DEF9EC', 
+        
       },
       fontFamily: {
-        mulish: ['mulish'],
+        mulish: ['quicksand'],
       },
     },
   },
