@@ -1,15 +1,20 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import logo from '../assets/logo~green.png';
 import { useLocation } from 'react-router-dom';
-import MarketsDropdown from './MarketsDropdown';
+import hotDeals from '../assets/icon-hot.svg';
+import cart from '../assets/icon-cart.svg';
+import headphone from '../assets/icon-headphone.svg';
 import SubNav from './SubNav';
 import { findPaths } from '../utilities';
 import SideDrawer from './SideDrawer';
 import MobileViewNav from './MobileViewNav';
+import SubNavBtn from './SubNavBtn';
 const TopNav = () => {
   const [scrolled, setScrolled] = useState(false);
   const [hasSubNav, setHasSubNav] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false)
+  const [showDropdown, setShowDropdown] = useState(false)
+
 
   const forebiddenPaths = ['/', '/supermarkets', 'localmarkts'];
 
@@ -47,6 +52,54 @@ const TopNav = () => {
             <a href='' className='w-full  sm:w-auto'>
               <img src={logo} alt='logo' className={`${scrolled ? 'w-[40%]' : 'w-[50%] '}`} />
             </a>
+            <div className={`${!scrolled? 'hidden' : 'block'} transition-all duration-500`}> 
+
+            <ul className='flex space-x-10 w-full '>
+        <li>
+          <a
+            onMouseEnter={()=> setShowDrawer(false)}
+            
+            href='/'
+            className='capitalize font-bold text-lg  text-alt-sec active:text-tertiary-100'
+          >
+            {' '}
+            home{' '}
+          </a>
+        </li>
+        <li>
+          <a
+            onMouseEnter={()=> setShowDrawer(false)}
+            href='/'
+            className='capitalize font-bold text-lg  text-alt-sec active:text-tertiary-100'
+          >
+            {' '}
+            about{' '}
+          </a>
+        </li>
+        <SubNavBtn showDrawer={showDropdown}  setShowDrawer={setShowDropdown}/>
+        <li>
+          <a
+            onMouseEnter={()=> setShowDrawer(false)}
+            
+            href='/'
+            className='capitalize font-bold text-lg  text-alt-sec active:text-tertiary-100'
+          >
+            {' '}
+            blog
+          </a>
+        </li>
+        <li>
+          <a
+            onMouseEnter={()=> setShowDrawer(false)}
+            
+            href='/'
+            className='inline-flex capitalize font-bold text-lg  text-alt-sec active:text-tertiary-100'
+          >
+            <img src={hotDeals} alt=' icon hot' /> deals{' '}
+          </a>
+        </li>
+      </ul>
+</div>
             <div className='flex space-x-20 sm:text-lg w-full sm:w-auto'>
               <button className='hidden sm:block font-semibold text-tertiary bg-white py-2 px-5 hover:bg-gray-200 hover:text-secondary rounded-lg'>
                 {' '}
@@ -59,7 +112,10 @@ const TopNav = () => {
             </div>
           </div>
         </div>
-        <SubNav />
+        <div className={`${scrolled? 'hidden' : 'block'} transition-all duration-500`}> 
+
+        <SubNav/>
+        </div>
       </header>
         <SideDrawer showDrawer={showDrawer} closeDrawer={setShowDrawer} />
 

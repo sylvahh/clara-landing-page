@@ -8,7 +8,7 @@ type MobileViewProps = {
 const MobileViewNav = (props: MobileViewProps) => {
     const {hasSubNav, setShowDrawer, showDrawer} = props
   return (
-    <div className={`${!hasSubNav && 'hidden'} w-[100%]   fixed bottom-0 bg-primary`}>
+    <div className={`${!hasSubNav && 'hidden'} w-[100%]   fixed bottom-0 bg-primary z-30`}>
         <div className='flex justify-between px-5 py-5 sm:px-10 w-[100%]  transition-all  sm:text-xl  sm:w-auto lg:hidden'>
             {/* menu */}
           <button  onClick={()=> setShowDrawer(!showDrawer)}  className=' text-black flex items-center  space-x-1  bg-transparent  hover:text-tertiary  transition-all'>

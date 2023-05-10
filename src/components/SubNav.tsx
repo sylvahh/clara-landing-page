@@ -5,7 +5,9 @@ import hotDeals from '../assets/icon-hot.svg';
 import cart from '../assets/icon-cart.svg';
 import headphone from '../assets/icon-headphone.svg';
 import SubNavBtn from './SubNavBtn';
-
+type subNavProps = {
+  scrolled : boolean
+}
 
 const SubNav = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -15,7 +17,7 @@ const SubNav = () => {
     <div
       className={`${
         !findPaths(forebiddenPaths) ? 'hidden' : 'hidden sm:flex'
-      } space-x-12   px-20 py-5  w-full`}
+      } space-x-12  px-10 xl:px-20 py-5  w-full`}
     >
       <div className='hidden sm:block w-[50%]'>
         <MarketsDropdown />
@@ -65,12 +67,12 @@ const SubNav = () => {
           </a>
         </li>
       </ul>
-      <div className='flex justify-between pl-10 w-full'>
+      <div className='flex space-x-5   lg:justify-between lg:pl-10 w-full'>
         <button
           type='button'
-          className='relative inline-flex   text-sm font-medium text-center text-white  '
+          className='relative inline-flex   text-sm font-medium text-center text-white'
         >
-          <img src={cart} alt='shopping cart' />
+          <img src={cart} alt='shopping cart' width={'35px'} className='' />
           <span className='sr-only'>Cart</span>
 
           <div className='absolute inline-flex items-center justify-center   w-5 h-5 text-xs font-bold text-white bg-tertiary-100 rounded-full -top-2 -right-2'>
