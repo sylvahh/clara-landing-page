@@ -17,10 +17,11 @@ const TopNav = () => {
 
 
   const forebiddenPaths = ['/', '/supermarkets', 'localmarkts'];
-
+const currentPath = window.location.pathname
   const checks = (): string => {
-    if (scrolled) return 'bg-white shadow-lg py-2';
+    if (scrolled) return 'bg-alt-tertiary shadow-lg py-2';
     else if (hasSubNav) return 'shadow-lg  sm:bg-primary sm:shadow-none py-3';
+      // else if (!forebiddenPaths.includes(currentPath)) return 'bg-white'
     else return 'bg-primary py-3 sm:py-5 shadow';
   };
   useEffect(() => {
@@ -30,7 +31,8 @@ const TopNav = () => {
         const headerHeight = header.offsetHeight;
         if (window.scrollY > headerHeight) {
           setScrolled(true);
-        } else {
+        }
+        else {
           setScrolled(false);
         }
       }

@@ -1,63 +1,17 @@
 import React, { useContext, useState } from 'react';
 import StoreContext from '../store/StoreContext';
+import { Option } from '../utilities';
 
-interface Option {
-  id: string;
-  label: string;
-  path: string;
+
+
+ interface customProps  {
+  options: Option[]
 }
 
-interface Props {
-  options: Option[];
-}
 
-const options = [
-  {
-  id: '1',
-  label: 'VI- Lagos (Sub region)',
-  path: 'caas'
-  },
-  {
-    id: '2',
-    label: 'Ikoyi - Lagos(Sub-region)',
-    path: 'caas'
-    },{
-      id: '3',
-      label: 'Ajeromi-Ifelodun Lagos (Sub-region)',
-      path: 'caas'
-      },{
-        id: '4',
-        label: 'Ajah-Chevero Lagos (Sub region)',
-        path: 'caas'
-        },{
-          id: '5',
-          label: 'Ikeja- Lagos (Sub-region)',
-          path: 'caas'
-          },{
-            id: '6',
-            label: 'Surulere -(Sub region)',
-            path: 'caas'
-            },{
-              id: '7',
-              label: 'Yaba- Lagos (Sub-region)',
-              path: 'caas'
-              },{
-                id: '8',
-                label: 'Lagos Mainland (Ebute-metta Lagos region)',
-                path: 'caas'
-                },{
-                  id: '9',
-                  label: 'Alimosho',
-                  path: 'caas'
-                  },{
-                    id: '10',
-                    label: 'Mushin Lagos (Sub-region)',
-                    path: 'caas'
-                    },  
-]
   
 
-const MarketDropDown = () => {
+const CustomDropdown = ({options}: customProps) => {
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -80,12 +34,12 @@ const MarketDropDown = () => {
     <div className="relative w-full flex justify-end items-start   ">
   
 
-      {/* MarketDropDown button */}
+      {/* CustomDropdown button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => { setIsOpen(!isOpen); console.log('clicked') }}
         className={`flex items-center justify-between capitalize w-[100%]  px-1 sm:px-4 py-2 text-sm font-medium text-gray-700 bg-cards rounded-md shadow-md hover:bg-gray-50 focus:outline-none ${isOpen && 'focus:ring-1'} focus:ring-primary focus:ring-offset-2`}
       >
-        { selectedOptionIndex === 0 ?  'Select Your Area':  selectedOption.label}
+        {   selectedOption.label}
         <svg
           className="w-4 h-4 "
           xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +55,7 @@ const MarketDropDown = () => {
         </svg>
       </button>
 
-      {/* MarketDropDown options */}
+      {/* CustomDropdown options */}
       <div
         className={`absolute top-10  w-[100%] mt-2 bg-white rounded-md shadow-lg ${
           isOpen ? 'block' : 'hidden'
@@ -111,7 +65,7 @@ const MarketDropDown = () => {
           className="p-1 overflow-auto text-base leading-6 shadow-xs max-h-56 focus:outline-none sm:text-sm sm:leading-5"
           tabIndex={-1}
           role="menu"
-          aria-label="MarketDropDown menu"
+          aria-label="CustomDropdown menu"
           aria-orientation="vertical"
         >
           {options.map((option, index) => (
@@ -133,4 +87,4 @@ const MarketDropDown = () => {
   );
 };
 
-export default React.memo(MarketDropDown);
+export default CustomDropdown

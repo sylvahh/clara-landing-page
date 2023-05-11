@@ -1,3 +1,161 @@
+
+
+
+
+export async function makeApiRequest(url: string, method: string, body?: object, token?: string) {
+
+  interface Options  extends RequestInit {
+     method: string
+    headers: HeadersInit 
+    body? : string
+  }
+  try {
+    const baseUrl = 'https://myclara.com.ng/backend/api';
+    const headers = new Headers()
+    headers.append("Content-Type", "application/json")
+    headers.append("Accept", "application/json")
+    if (token) {
+      headers.append("Authorization", `Bearer ${token}` )
+    }
+
+
+    let options:Options = {
+      method,
+      headers,
+    };
+    if (method === "POST" || method === "PUT" || method === "PATCH") {
+      options.body = JSON.stringify(body);
+    }
+    // console.log(options)
+    let response = await fetch(baseUrl + url, options);
+    let data = await response.json();
+    // console.log(data)
+    if (!response.ok) {
+      // throw new Error(responseHasObj( data.message));
+    }
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+
+
+
+
+export type Option = {
+  id: string;
+  label: string;
+  path: string;
+}
+
+
+export const itemsToShow = [
+  // {
+  //   id: '0',
+  //   label: 'VI- Lagos (Sub region)',
+  //   path: 'caas'
+  //   },
+  {
+    id: '0',
+    label: '50',
+    path: 'caas'
+  },
+  {
+    id: '1',
+    label: '100',
+    path: 'caas'
+  },
+  {
+    id: '2',
+    label: '150',
+    path: 'caas'
+  },
+  {
+    id: '3',
+    label: '200',
+    path: 'caas'
+  },
+  {
+    id: '4',
+    label: 'all',
+    path: 'caas'
+    },
+
+]
+
+
+ export  const MarketOptions = [
+  {
+    id: '0',
+    label: 'Select Your Area',
+    path: 'caas'
+    },
+ 
+   {
+  id: '1',
+  label: 'VI- Lagos (Sub region)',
+  path: 'caas'
+  },
+  {
+    id: '2',
+    label: 'Ikoyi - Lagos(Sub-region)',
+    path: 'caas'
+    },{
+      id: '3',
+      label: 'Ajeromi-Ifelodun Lagos (Sub-region)',
+      path: 'caas'
+      },{
+        id: '4',
+        label: 'Ajah-Chevero Lagos (Sub region)',
+        path: 'caas'
+        },{
+          id: '5',
+          label: 'Ikeja- Lagos (Sub-region)',
+          path: 'caas'
+          },{
+            id: '6',
+            label: 'Surulere -(Sub region)',
+            path: 'caas'
+            },{
+              id: '7',
+              label: 'Yaba- Lagos (Sub-region)',
+              path: 'caas'
+              },{
+                id: '8',
+                label: 'Lagos Mainland (Ebute-metta Lagos region)',
+                path: 'caas'
+                },{
+                  id: '9',
+                  label: 'Alimosho',
+                  path: 'caas'
+                  },{
+                    id: '10',
+                    label: 'Mushin Lagos (Sub-region)',
+                    path: 'caas'
+                    },  
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const findPaths = (forebiddenPaths: string[] | string): boolean => {
   const path = window.location.pathname;
   if (!forebiddenPaths.includes(path)) return true;
@@ -95,3 +253,4 @@ export const arrowRight = (
 </svg>
 
 )
+

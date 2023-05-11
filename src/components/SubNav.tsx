@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import MarketsDropdown from './MarketsDropdown';
-import { downChevron, findPaths } from '../utilities';
+import CustomDropdown from './CustomDropdown';
+import { MarketOptions, downChevron, findPaths } from '../utilities';
 import hotDeals from '../assets/icon-hot.svg';
 import cart from '../assets/icon-cart.svg';
 import headphone from '../assets/icon-headphone.svg';
@@ -20,7 +20,7 @@ const SubNav = () => {
       } space-x-12  px-10 xl:px-20 py-5  w-full`}
     >
       <div className='hidden sm:block w-[50%]'>
-        <MarketsDropdown />
+        <CustomDropdown options={MarketOptions} />
       </div>
       <ul className='flex space-x-10 w-full '>
         <li>

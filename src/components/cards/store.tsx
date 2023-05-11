@@ -19,9 +19,9 @@ const Store = () => {
           </div>
           <div className='flex flex-col space-y-5 lg:space-y-10'>
             
-            <button className='capitalize inline-flex  bg-tertiary-100 hover:bg-primary transition-all duration-500 text-white lg:w-fit font-semibold p-2  rounded-md'>
+            <a href='/supermarkets/blenco/3' className='capitalize inline-flex  bg-tertiary-100 hover:bg-primary transition-all duration-500 text-white lg:w-fit font-semibold p-2  rounded-md'>
               visit store {arrowRight}
-            </button>
+            </a>
             <button className='capitalize text-sm lg:text-base bg-alt-tertiary text-tertiary font-semibold py-2 px-[3px] rounded-md'>
               order on whatsapp
             </button>
