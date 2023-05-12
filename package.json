@@ -49,5 +49,7 @@
   },
   "devDependencies": {
     "@types/react-slick": "^0.23.10"
-  }
+  },
+  "proxy":"https://myclara.com.ng/backend/api"
+
 }

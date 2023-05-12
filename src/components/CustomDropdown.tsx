@@ -5,13 +5,14 @@ import { Option } from '../utilities';
 
 
  interface customProps  {
-  options: Option[]
+   options: Option[]
+   sideText?: string
 }
 
 
   
 
-const CustomDropdown = ({options}: customProps) => {
+const CustomDropdown = ({options, sideText}: customProps) => {
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,9 +38,9 @@ const CustomDropdown = ({options}: customProps) => {
       {/* CustomDropdown button */}
       <button
         onClick={() => { setIsOpen(!isOpen); console.log('clicked') }}
-        className={`flex items-center justify-between capitalize w-[100%]  px-1 sm:px-4 py-2 text-sm font-medium text-gray-700 bg-cards rounded-md shadow-md hover:bg-gray-50 focus:outline-none ${isOpen && 'focus:ring-1'} focus:ring-primary focus:ring-offset-2`}
+        className={`${sideText && 'bg-transparent shadow-none'} flex items-center justify-between capitalize w-[100%]  px-1 sm:px-4 py-2 text-sm font-medium text-gray-700 bg-cards rounded-md shadow-md hover:bg-gray-50 focus:outline-none ${isOpen && 'focus:ring-1'} focus:ring-primary focus:ring-offset-2`}
       >
-        {   selectedOption.label}
+        {sideText} {selectedOption.label}
         <svg
           className="w-4 h-4 "
           xmlns="http://www.w3.org/2000/svg"
