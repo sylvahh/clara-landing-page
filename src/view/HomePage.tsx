@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import MarketDropDown from '../components/CustomDropdown';
 import TopNav from '../components/TopNav';
 import blenco from '../assets/blenco.png';
@@ -29,7 +29,17 @@ import { MarketOptions, makeApiRequest } from '../utilities';
 import CustomDropdown from '../components/CustomDropdown';
 
 const HomePage = () => {
-  makeApiRequest('/supermarket','GET',).then(res => console.log)
+  makeApiRequest('/supermarkets', 'GET',).then(res => console.log(res))
+  // makeApiRequest('/me', 'GET', {}, '45|ddmGuF1vRt35Re1YXS6XOSSaqXse2k5wTDjwS10g').then(res => console.log(res))
+
+  const fetchData = async (path:string) => {
+    const request  = await fetch(`https://myclara.com.ng/backend/api${path}`)
+    const response = await request.json()
+    console.log(response)
+  }
+  useEffect(() => {
+    // fetchData('/supermarkets')
+  },[])
   return (
     <Fragment>
       <TopNav />

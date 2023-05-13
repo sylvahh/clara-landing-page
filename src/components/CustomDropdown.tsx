@@ -58,7 +58,7 @@ const CustomDropdown = ({options, sideText}: customProps) => {
 
       {/* CustomDropdown options */}
       <div
-        className={`absolute top-10  w-[100%] mt-2 bg-white rounded-md shadow-lg ${
+        className={`absolute top-10  w-[100%] mt-2 bg-white rounded-md shadow-lg z-20 ${
           isOpen ? 'block' : 'hidden'
         }`}
       >
