@@ -108,7 +108,7 @@ const TopNav = () => {
               </button>
               <button
                 type='button'
-                className={`${(hasSubNav && !sc) && 'hidden'} relative inline-flex   text-sm font-medium text-center text-white`}
+                className={`${(hasSubNav && !scrolled) && 'hidden'} relative inline-flex   text-sm font-medium text-center text-white`}
               >
                 <img src={cart} alt='shopping cart' width={'35px'} className='' />
                 <span className='sr-only'>Cart</span>
