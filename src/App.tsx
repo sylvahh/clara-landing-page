@@ -8,6 +8,7 @@ import LocalMarket from './view/markets/LocalMarkets';
 import Supermarket from './view/markets/Supermarket';
 import { findPaths } from './utilities';
 import Store from './view/markets/Store';
+import Cart from './view/Cart';
 
 function App() {
   const forebiddenpaths =['/', '/supermarkets', '/localmarkets' ]
@@ -21,6 +22,8 @@ function App() {
         <Route path='/localmarkets' element={<LocalMarket />} />
         <Route path='/supermarkets/blenco' element={<Supermarket />} />
         <Route path='/supermarkets/blenco/3' element={<Store />} />
+        <Route path='/supermarkets/blenco/carts' element={<Cart />} />
+
       </Routes>
     </div>
   );

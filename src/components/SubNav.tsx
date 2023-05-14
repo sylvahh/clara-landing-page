@@ -5,13 +5,17 @@ import hotDeals from '../assets/icon-hot.svg';
 import cart from '../assets/icon-cart.svg';
 import headphone from '../assets/icon-headphone.svg';
 import SubNavBtn from './SubNavBtn';
+import CartBtn from './CartBtn';
 type subNavProps = {
-  scrolled : boolean
+  scrolled: boolean
+  showCart: boolean;
+  setShowCart: any;
 }
 
-const SubNav = () => {
+const SubNav = (props:subNavProps) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const forebiddenPaths = ['/', '/supermarkets', 'localmarkts'];
+  const {showCart,setShowCart, scrolled} = props
 
   return (
     <div
@@ -67,18 +71,9 @@ const SubNav = () => {
           </a>
         </li>
       </ul>
-      <div className='flex space-x-5   lg:justify-between lg:pl-10 w-full'>
-        <button
-          type='button'
-          className='relative inline-flex   text-sm font-medium text-center text-white'
-        >
-          <img src={cart} alt='shopping cart' width={'35px'} className='' />
-          <span className='sr-only'>Cart</span>
-
-          <div className='absolute inline-flex items-center justify-center   w-5 h-5 text-xs font-bold text-white bg-tertiary-100 rounded-full -top-2 -right-2'>
-            20
-          </div>
-        </button>
+      <div className='flex space-x-5 relative  lg:justify-between lg:pl-10 w-full'>
+        
+     <CartBtn showCart={showCart} setShowCart={setShowCart} scroll={scrolled} />
 
         <div className='flex  items-start gap-3'>
           <img src={headphone} alt='head phone' />
