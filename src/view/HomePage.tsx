@@ -29,7 +29,7 @@ import { MarketOptions, makeApiRequest } from '../utilities';
 import CustomDropdown from '../components/CustomDropdown';
 
 const HomePage = () => {
-  makeApiRequest('/api/supermarkets', 'GET',).then(res => console.log(res))
+  makeApiRequest('/api/market-type', 'GET',).then(res => console.log(res))
   // makeApiRequest('/me', 'GET', {}, '45|ddmGuF1vRt35Re1YXS6XOSSaqXse2k5wTDjwS10g').then(res => console.log(res))
 
   const fetchData = async (path:string) => {
