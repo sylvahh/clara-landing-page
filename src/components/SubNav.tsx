@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import CustomDropdown from './CustomDropdown';
-import { MarketOptions, downChevron, findPaths } from '../utilities';
+import { MarketOptions, findPaths } from '../utilities';
 import hotDeals from '../assets/icon-hot.svg';
-import cart from '../assets/icon-cart.svg';
 import headphone from '../assets/icon-headphone.svg';
 import SubNavBtn from './SubNavBtn';
 import CartBtn from './CartBtn';
+
 type subNavProps = {
-  scrolled: boolean
+  scrolled: boolean;
   showCart: boolean;
   setShowCart: any;
-}
+};
 
-const SubNav = (props:subNavProps) => {
+const SubNav = (props: subNavProps) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const forebiddenPaths = ['/', '/supermarkets', 'localmarkts'];
-  const {showCart,setShowCart, scrolled} = props
+  const { showCart, setShowCart, scrolled } = props;
 
   return (
     <div
@@ -29,8 +29,7 @@ const SubNav = (props:subNavProps) => {
       <ul className='flex space-x-10 w-full '>
         <li>
           <a
-            onMouseEnter={()=> setShowDrawer(false)}
-            
+            onMouseEnter={() => setShowDrawer(false)}
             href='/'
             className='capitalize font-bold text-lg  text-alt-sec active:text-tertiary-100'
           >
@@ -40,7 +39,7 @@ const SubNav = (props:subNavProps) => {
         </li>
         <li>
           <a
-            onMouseEnter={()=> setShowDrawer(false)}
+            onMouseEnter={() => setShowDrawer(false)}
             href='/'
             className='capitalize font-bold text-lg  text-alt-sec active:text-tertiary-100'
           >
@@ -48,11 +47,10 @@ const SubNav = (props:subNavProps) => {
             about{' '}
           </a>
         </li>
-        <SubNavBtn showDrawer={showDrawer}  setShowDrawer={setShowDrawer}/>
+        <SubNavBtn showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
         <li>
           <a
-            onMouseEnter={()=> setShowDrawer(false)}
-            
+            onMouseEnter={() => setShowDrawer(false)}
             href='/'
             className='capitalize font-bold text-lg  text-alt-sec active:text-tertiary-100'
           >
@@ -62,8 +60,7 @@ const SubNav = (props:subNavProps) => {
         </li>
         <li>
           <a
-            onMouseEnter={()=> setShowDrawer(false)}
-            
+            onMouseEnter={() => setShowDrawer(false)}
             href='/'
             className='inline-flex capitalize font-bold text-lg  text-alt-sec active:text-tertiary-100'
           >
@@ -72,8 +69,7 @@ const SubNav = (props:subNavProps) => {
         </li>
       </ul>
       <div className='flex space-x-5 relative  lg:justify-between lg:pl-10 w-full'>
-        
-     <CartBtn showCart={showCart} setShowCart={setShowCart} scroll={scrolled} />
+        <CartBtn showCart={showCart} setShowCart={setShowCart} scroll={scrolled} />
 
         <div className='flex  items-start gap-3'>
           <img src={headphone} alt='head phone' />

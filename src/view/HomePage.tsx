@@ -29,16 +29,9 @@ import { MarketOptions, makeApiRequest } from '../utilities';
 import CustomDropdown from '../components/CustomDropdown';
 
 const HomePage = () => {
-  makeApiRequest('/api/market-type', 'GET',).then(res => console.log(res))
-  // makeApiRequest('/me', 'GET', {}, '45|ddmGuF1vRt35Re1YXS6XOSSaqXse2k5wTDjwS10g').then(res => console.log(res))
-
-  const fetchData = async (path:string) => {
-    const request  = await fetch(`https://myclara.com.ng/backend/api${path}`)
-    const response = await request.json()
-    console.log(response)
-  }
+  makeApiRequest('/api/supermarkets', 'GET',).then(res => console.log(res))
+  
   useEffect(() => {
-    // fetchData('/supermarkets')
   },[])
   return (
     <Fragment>

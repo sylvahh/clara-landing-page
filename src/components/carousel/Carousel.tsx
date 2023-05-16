@@ -1,12 +1,7 @@
-import supermarket from '../../assets/supermarket.png';
-import blenco from '../../assets/blenco.png';
-import React, { Component } from 'react';
-import Slider from 'react-slick';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 
 
-// What I love about Clara is that I can now order my groceries from stores I love and even order from vendors that share same place with the Supermarket.
 
 const  content = [<div className='px-10 '>
     <p className='text-[20px] lg:text-[25px]'>
@@ -30,10 +25,7 @@ const  content = [<div className='px-10 '>
 
 ]
 
-// I have been looking for a way to sell online. Since I added my supermarket on CLARA, I have enjoyed increase in my sales supermarket by 40% which I couldn't do on my own online.
-// Mr. Ugo
 
-const handleDragStart = (e: Event) => e.preventDefault();
 const responsive = {
   0: { items: 1 },
   568: { items: 1 },
@@ -42,9 +34,7 @@ const responsive = {
 
 
  const Carousel = () => {
-  const items = [
-    content, content, content
-  ];
+
   return <AliceCarousel mouseTracking items={content}
   autoPlay
         autoPlayStrategy="none"

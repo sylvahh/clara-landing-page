@@ -8,7 +8,7 @@ export async function makeApiRequest(url: string, method: string, body?: object,
     // https://staging-api.vterminal.ng/api
     // https://myclara.com.ng/backend/api
     // const baseUrl = 'https://staging-api.vterminal.ng/api';
-    const baseUrl = 'https://myclara.com.ng/backend';
+    const baseUrl = 'https://myclara.com.ng/engine';
     const headers: HeadersInit = { 'Content-Type': 'application/json', Accept: 'application/json' };
     // headers.append("Content-Type", "application/json")
     // headers.append("Accept", "application/json")
@@ -24,12 +24,10 @@ export async function makeApiRequest(url: string, method: string, body?: object,
     if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
       options.body = JSON.stringify(body);
     }
-    console.log(options);
     let response = await fetch(baseUrl + url, options);
     let data = await response.json();
-    // console.log(data)
     if (!response.ok) {
-      // throw new Error(responseHasObj( data.message));
+      throw new Error(data.message);
     }
     return data;
   } catch (error) {

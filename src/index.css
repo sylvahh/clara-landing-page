@@ -64,7 +64,6 @@ body{
 
 /* Handle */
 .cart-scroll::-webkit-scrollbar-thumb {
-  /* background: red; */
   @apply bg-tertiary-100 rounded-md
 }
 

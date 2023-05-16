@@ -1,5 +1,4 @@
 import React from 'react';
-// import CustomDropdown from '../../components/CustomDropdown';
 import { itemsToShow, sortIcon, sortItem } from '../../utilities';
 import CustomDropdown from '../../components/CustomDropdown';
 import Products from '../../components/cards/Products';
@@ -14,7 +13,6 @@ const Store = () => {
         <h1 className='font-extrabold text-left  sm:text-[48px] sm:leading-[56px] text-alt-sec p-1  '>
           01Shawarma
         </h1>
-        {/* <span className='block font-bold text-2xl capitalize text-tertiary-100'>ajah-cheveron</span> */}
       </div>
 
       <div className='mt-10 sm:px-20'>
@@ -31,7 +29,6 @@ const Store = () => {
             </div>
             <div className='flex flex-col items-center shadow  rounded-md w-full'>
               <span className='pb-3'>Sorted by:</span>
-              {/* {sortIcon} */}
             <CustomDropdown options={sortItem} sideText='' />
             </div>
           </div>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import logo from '../assets/logo~green.png';
-import { downChevron, findPaths, usericon } from '../utilities';
+import { downChevron, usericon } from '../utilities';
 import hotDeals from '../assets/icon-hot.svg';
 import cart from '../assets/icon-cart.svg';
 import headphone from '../assets/icon-headphone.svg';
@@ -8,21 +8,13 @@ import facebook from '../assets/icon-facebook-white.svg';
 import twitter from '../assets/icon-twitter-white.svg';
 import instagram from '../assets/icon-instagram-white.svg';
 
-
-
-
 type drawerProps = {
   showDrawer: boolean;
   closeDrawer: any;
 };
 
 const SideDrawer = (props: drawerProps) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { showDrawer, closeDrawer } = props;
-
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
 
   return (
     <div
@@ -117,12 +109,23 @@ const SideDrawer = (props: drawerProps) => {
           <div className='my-10'>
             <h1 className='font-bold'>Follow us</h1>
             <div className='flex space-x-5 mt-1'>
-              <a href='/' className='p-1 rounded-full bg-tertiary-100'> <img className='w-5' src={twitter} alt="twitter" /></a>
-              <a href='/' className='p-1 rounded-full bg-tertiary-100'> <img className='w-5' src={facebook} alt="facebook" /></a>
-              <a href='/' className='p-1 rounded-full bg-tertiary-100'> <img className='w-5' src={instagram} alt="instagram" /></a>
+              <a href='/' className='p-1 rounded-full bg-tertiary-100'>
+                {' '}
+                <img className='w-5' src={twitter} alt='twitter' />
+              </a>
+              <a href='/' className='p-1 rounded-full bg-tertiary-100'>
+                {' '}
+                <img className='w-5' src={facebook} alt='facebook' />
+              </a>
+              <a href='/' className='p-1 rounded-full bg-tertiary-100'>
+                {' '}
+                <img className='w-5' src={instagram} alt='instagram' />
+              </a>
             </div>
           </div>
-          <small className='block text-center '>Copyright 2023 © Clara. All rights reserved. </small>
+          <small className='block text-center '>
+            Copyright 2023 © Clara. All rights reserved.{' '}
+          </small>
         </div>
       </div>
     </div>

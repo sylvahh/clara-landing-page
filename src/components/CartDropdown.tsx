@@ -1,6 +1,5 @@
 import React from 'react';
 import shawarma2 from '../assets/shawarma2.jpeg';
-// assets / shawarma2.jpeg'
 
 type dropdownProps = {
   showCart: boolean;
@@ -18,7 +17,6 @@ const CartDropdown = ({ showCart, setShowCart, scroll }: dropdownProps) => {
       } flex flex-col space-y-5 transition-all duration-300 ease-in-out w-[25%] h-[300px]  bg-white shadow-md z-50 p-5`}
     >
       <div className='flex flex-col items-center space-y-3 overflow-y-auto cart-scroll  w-full h-full p-2 '>
-        {/* <h1 className='font-bold text-2xl'>content goes here </h1> */}
         <div className='flex justify-between items-start w-full'>
           <img src={shawarma2} width={'25%'} alt='' />
           <div className='flex flex-col'>

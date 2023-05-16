@@ -1,15 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import logo from '../assets/logo~green.png';
-import { useLocation } from 'react-router-dom';
 import hotDeals from '../assets/icon-hot.svg';
-import cart from '../assets/icon-cart.svg';
-import headphone from '../assets/icon-headphone.svg';
 import SubNav from './SubNav';
 import { findPaths } from '../utilities';
 import SideDrawer from './SideDrawer';
 import MobileViewNav from './MobileViewNav';
 import SubNavBtn from './SubNavBtn';
 import CartBtn from './CartBtn';
+
 const TopNav = () => {
   const [scrolled, setScrolled] = useState(false);
   const [hasSubNav, setHasSubNav] = useState(false);
@@ -23,7 +21,6 @@ const TopNav = () => {
   const checks = (): string => {
     if (scrolled) return 'bg-alt-tertiary shadow-lg py-3';
     else if (hasSubNav) return 'shadow-lg  sm:bg-primary sm:shadow-none py-4';
-    // else if (!forebiddenPaths.includes(currentPath)) return 'bg-white'
     else return 'bg-primary py-3 sm:py-5 shadow';
   };
   useEffect(() => {
@@ -42,7 +39,6 @@ const TopNav = () => {
     setHasSubNav(findPaths(forebiddenPaths));
     window.addEventListener('scroll', handleScroll);
 
-    console.log(hasSubNav)
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -54,7 +50,7 @@ const TopNav = () => {
       <header className='  fixed top-0 left-0 right-0   pb-10 backdrop-blur-[0.1px]  z-40'>
         <div className={`${checks()} px-5  transition-all  `}>
           <div className='flex justify-between    items-center'>
-            <a href='' className='w-full  sm:w-auto'>
+            <a href='/' className='w-full  sm:w-auto'>
               <img src={logo} alt='logo' className={`${scrolled ? 'w-[40%]' : 'w-[50%] '}`} />
             </a>
             <div className={`${(!scrolled || !hasSubNav) ? 'hidden' : 'block'} transition-all duration-500`}>
