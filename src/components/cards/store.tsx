@@ -1,6 +1,7 @@
 import React from 'react';
-import blenco from '../../assets/blenco~logo.png';
 import { arrowRight, imageBaseUrl, ratings } from '../../utilities';
+import { useNavigate } from 'react-router-dom';
+import { useStore } from '../../store/StoreProvider';
 
 type StoreProps = {
   id: string;
@@ -12,13 +13,20 @@ type StoreProps = {
 
 const Store = (props: StoreProps) => {
   const { id, name, image, products, whatsAppLink } = props;
+  const Navigate = useNavigate()
+  const {getMarketId} = useStore()
+
+  const handleProduct = (storeId: string,  storeName: string) => {
+    getMarketId(storeId, 'STORES_PRODUCTS').then(()=> Navigate(storeName) )
+    // 
+  }
   return (
     <div className='relative rounded-lg h-full shadow-sm shadow-black hover:shadow-black hover:shadow-md hover:-translate-y-0.5 transition-all'>
       <div className='flex flex-col lg:flex-row  lg:justify-between p-5 w-full '>
         <div className='flex flex-col items-center lg:items-start space-y-3 lg:w-[50%]'>
           <div className='flex justify-center  items-start'>
 
-          <img src={imageBaseUrl + image} alt='logo' className=' lg:w-[85%]  lg:h-[100px] object-contain' />
+          <img src={imageBaseUrl + image} alt='logo' className=' w-[85%]  h-[100px] object-contain' />
           </div>
           <span className='hidden lg:block bg-[#ccc] w-fit p-2 rounded-md text-tertiary-100'>
             <span className='mr-2 font-medium'>{products}</span> Products
@@ -34,7 +42,7 @@ const Store = (props: StoreProps) => {
             </small>
           </div>
           <div className='flex flex-col space-y-5 lg:space-y-10'>
-            <button className='capitalize inline-flex justify-center bg-tertiary-100 hover:bg-primary transition-all duration-500 text-white lg:w-fit font-semibold p-2  rounded-md'>
+            <button onClick={()=> handleProduct(id,name)} className='capitalize inline-flex justify-center bg-tertiary-100 hover:bg-primary transition-all duration-500 text-white lg:w-fit font-semibold p-2  rounded-md'>
               visit store {arrowRight}
             </button>
             <a

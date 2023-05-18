@@ -1,9 +1,5 @@
-import React, { useContext,  createContext, useReducer, useEffect } from "react";
-import { getItem, getStoreById, makeApiRequest, storeItem } from "../utilities";
-import { useNavigate } from "react-router-dom";
-// import { useHistory } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom';
-
+import React, { useContext, createContext, useReducer, useEffect } from 'react';
+import { getItem, getStoreById, makeApiRequest, storeItem } from '../utilities';
 
 interface StoreProviderProps {
   children: React.ReactNode;
@@ -14,25 +10,26 @@ type StoreAction = { type: any; payload: any };
 interface IStoreContext {
   localmarket: Array<any>;
   supermarket: Array<any>;
-  getMarketId: (id: string, city: string) => Promise<void> 
-  marketList: any[]
-  isLoading: boolean
-  
-  // getStoresById: (id:string) => any[]
+  getMarketId: (id: string, storeCase: string, city?: string) => Promise<void>;
+  marketList: any[];
+  productList: any[];
+  isLoading: boolean;
+  dataFetched: boolean
 }
 
-const initialState: IStoreContext =  {
+const initialState: IStoreContext = {
   localmarket: [],
   supermarket: [],
-  getMarketId: async(id, city) => {} ,
+  getMarketId: async (id, storeCase, city) => {},
   marketList: [],
-  isLoading: false
-  // getStoresById: getStoreById
+  productList: [],
+  isLoading: false,
+  dataFetched:false
 };
 
-const reducer = (state:IStoreContext, action:StoreAction) => {
+const reducer = (state: IStoreContext, action: StoreAction) => {
   switch (action.type) {
-    case "FETCH_DATA": {
+    case 'FETCH_DATA': {
       const { localmarketData, supermarketData } = action.payload;
       return {
         ...state,
@@ -41,14 +38,23 @@ const reducer = (state:IStoreContext, action:StoreAction) => {
         // isLoading: false
       };
     }
-    case "UPDATE_LIST": {
+    case 'UPDATE_STORE_LIST': {
       const stores = action.payload;
       return {
         ...state,
         marketList: stores,
-      //  isLoading: false
+        //  isLoading: false
       };
-      }
+    }
+
+    case 'UPDATE_PRODUCT_LIST': {
+      const stores = action.payload;
+      return {
+        ...state,
+        productList: stores,
+        //  isLoading: false
+      };
+    }
     default:
       return state;
   }
@@ -56,70 +62,77 @@ const reducer = (state:IStoreContext, action:StoreAction) => {
 
 const StoreContext = createContext<IStoreContext>(initialState);
 
-const StoreProvider = ({ children }:StoreProviderProps) => {
+const StoreProvider = ({ children }: StoreProviderProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const Navigate = useNavigate()
-  // const history = useHistory();
+
+  const marketId = getItem('M_id');
+  const marketCity = getItem('city');
+  const productId = getItem('P_id');
 
   const fetchData = async () => {
     try {
-      state.isLoading = true
-      const localMarket_req = await makeApiRequest("/local-markets", 'GET');
-    const supermarket_req = await makeApiRequest("/supermarkets", 'GET');
-    
-    const localmarketData = localMarket_req
-    const supermarketData =  supermarket_req
-      
-    dispatch({ type: "FETCH_DATA", payload: { localmarketData, supermarketData } });
-      
+      // state.isLoading = true;
+      const localMarket_req = await makeApiRequest('/local-markets', 'GET');
+      const supermarket_req = await makeApiRequest('/supermarkets', 'GET');
+
+      const localmarketData = localMarket_req;
+      const supermarketData = supermarket_req;
+
+      dispatch({ type: 'FETCH_DATA', payload: { localmarketData, supermarketData } });
     } catch (error) {
-      throw error
+      throw error;
     }
-    
   };
 
-  const getMarketId = async (id: string, city: string) => {
+  const getMarketId = async (id: string, storeCase: string, city?: string) => {
     try {
-      state.isLoading = true
-      const stores = await getStoreById(id);
+      // state.isLoading = true;
+
+      const stores = await getStoreById(id, storeCase);
       if (stores) {
         console.log('stores', state.isLoading);
-        storeItem('id', id)
-        storeItem('city', city)
-        dispatch({ type: "UPDATE_LIST", payload: stores });
-        // state.marketList &&  Navigate(name)
+        switch (storeCase) {
+          case 'MARKET_STORES':
+            storeItem('M_id', id);
+            storeItem('city', city);
+            dispatch({ type: 'UPDATE_STORE_LIST', payload: stores });
+            break;
+          case 'STORES_PRODUCTS':
+            storeItem('P_id', id);
+            dispatch({ type: 'UPDATE_PRODUCT_LIST', payload: stores });
+            break;
+          default:
+        }
       }
     } catch (error) {
       console.warn(error);
     }
+    // finally {
+    //   state.isLoading = true;
+    // }
   };
-  
-  
 
   useEffect(() => {
     fetchData();
-    const marketId = getItem('id')
-    const marketCity = getItem('city')
-    if (!state.marketList.length && marketId && marketCity) {
-      getMarketId(marketId, marketCity)
+
+    if ((!state.marketList.length|| !state.productList.length) && !state.dataFetched ) {
+      if (marketId && marketCity) getMarketId(marketId, 'MARKET_STORES', marketCity);
+      if (productId) getMarketId(productId, 'STORES_PRODUCTS');
+      state.dataFetched = true
     }
-  }, [state.marketList]);
+  }, [state.marketList, state.productList]);
 
   const storeContextValue = {
     localmarket: state.localmarket,
     supermarket: state.supermarket,
     getMarketId: getMarketId,
     marketList: state.marketList,
-  isLoading: state.isLoading
-
-    // getStoresById: getStoresById,
+    productList: state.productList,
+    isLoading: state.isLoading,
+    dataFetched:state.dataFetched
   };
 
-  return (
-    <StoreContext.Provider value={storeContextValue}>
-      {children}
-    </StoreContext.Provider>
-  );
+  return <StoreContext.Provider value={storeContextValue}>{children}</StoreContext.Provider>;
 };
 const useStore = () => useContext(StoreContext);
 

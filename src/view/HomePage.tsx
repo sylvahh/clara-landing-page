@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useContext } from 'react';
-import MarketDropDown from '../components/CustomDropdown';
 import TopNav from '../components/TopNav';
 import blenco from '../assets/blenco.png';
 import supermarket from '../assets/supermarket.png';
@@ -20,10 +19,8 @@ import cardPayment from '../assets/card~payment.png';
 
 import Cards from '../components/cards/Cards';
 import Carousel from '../components/carousel/Carousel';
-import { MarketOptions, getStoreById, makeApiRequest } from '../utilities';
+import { MarketOptions } from '../utilities';
 import CustomDropdown from '../components/CustomDropdown';
-import StoreContext from '../store/StoreContext';
-import { useStore } from '../store/StoreProvider';
 
 const HomePage = () => {
   // const {getStoresById} = useStore()
@@ -71,7 +68,7 @@ const HomePage = () => {
         <div className='relative flex flex-col  lg:flex-row  items-center justify-between '>
           <div className='text-[24px]  sm:text-[55px] lg:absolute top-0  w-fit'>
             <h1>
-              Become a<span className='text-tertiary underline pl-1'>shopping assistant</span> today
+              Become a <span className='text-tertiary underline pl-1'>Shopping Assistant</span> today
             </h1>
           </div>
           <div className=' w-full lg:w-[60%] mt-10 lg:mt-20'>
@@ -82,7 +79,7 @@ const HomePage = () => {
               <h4 className='font-semibold text-xl text-center '>
                 Make money while shopping for clients
               </h4>
-              <button className='bg-primary p-2 rounded w-full lg:w-auto font-semibold text-tertiary hover:text-white hover:bg-tertiary transition-colors duration-300'>
+              <button className='bg-primary p-2 text-white rounded w-full lg:w-auto font-semibold text-tertiary hover:text-white hover:bg-tertiary transition-colors duration-300'>
                 {' '}
                 Become a Shopping Assistant{' '}
               </button>
