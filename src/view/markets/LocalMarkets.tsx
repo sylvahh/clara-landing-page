@@ -7,8 +7,14 @@ import shopLogo1 from '../../assets/shop~logo1.png';
 import image2 from '../../assets/image2.png';
 import shopLogo2 from '../../assets/shop~logo2.png';
 import adImg from '../../assets/ad~image.png';
+import { useStore } from '../../store/StoreProvider';
 
 const LocalMarket = () => {
+  const {localmarket} = useStore()
+
+  const mappedList = localmarket.map(({market_name, location, market_img, market_logo, city, id}) => {
+    return <SupermarketsCards key={id} id={id} name={market_name} location={location} city={city} image={market_img} logo={market_logo} />
+  })
   return (
     <section className='relative px-5 sm:px-10 mt-[6rem] sm:mt-[10rem] '>
       <div>
@@ -29,10 +35,7 @@ const LocalMarket = () => {
       </div>
 
       <div className='grid grid-cols-2 sm:grid-cols-4 gap-5 sm:gap-20 my-10 sm:my-20'>
-        <SupermarketsCards image={image1} logo={shopLogo1} />
-        <SupermarketsCards image={blencoImg} logo={blencoLogo} />
-        <SupermarketsCards image={image2} logo={shopLogo2} />
-        <SupermarketsCards image={image2} logo={shopLogo2} />
+      {mappedList}
       </div>
 
       <a href='/' className=' underline  decoration-tertiary hover:decoration-primary text-left '>
@@ -49,10 +52,10 @@ const LocalMarket = () => {
       </div>
 
       <div className='grid grid-cols-2 sm:grid-cols-4 gap-5 sm:gap-20 my-[8rem] sm:my-[12rem]'>
-        <SupermarketsCards image={image1} logo={shopLogo1} />
+        {/* <SupermarketsCards image={image1} logo={shopLogo1} />
         <SupermarketsCards image={blencoImg} logo={blencoLogo} />
         <SupermarketsCards image={image2} logo={shopLogo2} />
-        <SupermarketsCards image={image2} logo={shopLogo2} />
+        <SupermarketsCards image={image2} logo={shopLogo2} /> */}
       </div>
     </section>
   );

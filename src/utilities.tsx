@@ -1,3 +1,5 @@
+export const imageBaseUrl = 'https://myclara.com.ng'
+
 export async function makeApiRequest(url: string, method: string, body?: object, token?: string) {
   interface Options extends RequestInit {
     method: string;
@@ -5,16 +7,11 @@ export async function makeApiRequest(url: string, method: string, body?: object,
     body?: string;
   }
   try {
-    // https://staging-api.vterminal.ng/api
-    // https://myclara.com.ng/backend/api
-    // const baseUrl = 'https://staging-api.vterminal.ng/api';
-    const baseUrl = 'https://myclara.com.ng/engine';
+    const baseUrl = 'https://myclara.com.ng/engine/api';
     const headers: HeadersInit = { 'Content-Type': 'application/json', Accept: 'application/json' };
-    // headers.append("Content-Type", "application/json")
-    // headers.append("Accept", "application/json")
+
     if (token) {
       headers.Authorization = `Bearer ${token}`;
-      // headers.append("Authorization", `Bearer ${token}` )
     }
 
     let options: Options = {
@@ -34,6 +31,25 @@ export async function makeApiRequest(url: string, method: string, body?: object,
     throw error;
   }
 }
+
+export const getStoreById = async (id: string) => {
+  try {
+    id = id.toString()
+    const response = await makeApiRequest('/stores-in-martket', 'GET');
+    const { store } = response.data;
+    const stores = store.filter((store: { market_id: string }) => store.market_id === id);
+    // console.log('stores', stores);
+    return stores;
+  } catch (error) {
+    console.warn(error);
+    return [];
+  }
+};
+
+export const storeItem = (id: string, data: any) => sessionStorage.setItem(id, data)
+export const getItem = (id:string)=> sessionStorage.getItem(id)
+
+
 
 export type Option = {
   id: string;
@@ -275,10 +291,18 @@ export const arrowRight = (
   </svg>
 );
 
-export const arrowLeft = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-<path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-</svg>
-
+export const arrowLeft = (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    strokeWidth={1.5}
+    stroke='currentColor'
+    className='w-6 h-6'
+  >
+    <path strokeLinecap='round' strokeLinejoin='round' d='M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18' />
+  </svg>
+);
 
 export const sortIcon = (
   <svg
@@ -298,7 +322,14 @@ export const sortIcon = (
 );
 
 export const cart = (
-  <svg width='25' height='25' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg' className="hidden sm:block">
+  <svg
+    width='25'
+    height='25'
+    viewBox='0 0 25 25'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+    className='hidden sm:block'
+  >
     <g clip-path='url(#clip0)'>
       <path
         d='M24.4941 3.36652H4.73614L4.69414 3.01552C4.60819 2.28593 4.25753 1.61325 3.70863 1.12499C3.15974 0.636739 2.45077 0.366858 1.71614 0.366516L0.494141 0.366516V2.36652H1.71614C1.96107 2.36655 2.19748 2.45647 2.38051 2.61923C2.56355 2.78199 2.68048 3.00626 2.70914 3.24952L4.29414 16.7175C4.38009 17.4471 4.73076 18.1198 5.27965 18.608C5.82855 19.0963 6.53751 19.3662 7.27214 19.3665H20.4941V17.3665H7.27214C7.02705 17.3665 6.79052 17.2764 6.60747 17.1134C6.42441 16.9505 6.30757 16.7259 6.27914 16.4825L6.14814 15.3665H22.3301L24.4941 3.36652ZM20.6581 13.3665H5.91314L4.97214 5.36652H22.1011L20.6581 13.3665Z'
@@ -321,12 +352,36 @@ export const cart = (
   </svg>
 );
 
+export const trash = (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    strokeWidth={1.5}
+    stroke='currentColor'
+    className='w-6 h-6'
+  >
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0'
+    />
+  </svg>
+);
 
-export const trash = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-<path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-</svg>
-
-
-export const exit = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-<path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-</svg>
+export const exit = (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    strokeWidth={1.5}
+    stroke='currentColor'
+    className='w-6 h-6'
+  >
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9'
+    />
+  </svg>
+);

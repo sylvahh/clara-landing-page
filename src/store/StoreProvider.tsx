@@ -1,194 +1,126 @@
-import React, { useReducer } from 'react';
-import StoreContext from './StoreContext';
+import React, { useContext,  createContext, useReducer, useEffect } from "react";
+import { getItem, getStoreById, makeApiRequest, storeItem } from "../utilities";
+import { useNavigate } from "react-router-dom";
+// import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
-const storeOptions = [
-  {
-    id: '1',
-    label: 'VI- Lagos (Sub region)',
-    path: 'caas',
-  },
-  {
-    id: '2',
-    label: 'Ikoyi - Lagos(Sub-region)',
-    path: 'caas',
-  },
-  {
-    id: '3',
-    label: 'Ajeromi-Ifelodun Lagos (Sub-region)',
-    path: 'caas',
-  },
-  {
-    id: '4',
-    label: 'Ajah-Chevero Lagos (Sub region)',
-    path: 'caas',
-  },
-  {
-    id: '5',
-    label: 'Ikeja- Lagos (Sub-region)',
-    path: 'caas',
-  },
-  {
-    id: '6',
-    label: 'Surulere -(Sub region)',
-    path: 'caas',
-  },
-  {
-    id: '7',
-    label: 'Yaba- Lagos (Sub-region)',
-    path: 'caas',
-  },
-  {
-    id: '8',
-    label: 'Lagos Mainland (Ebute-metta Lagos region)',
-    path: 'caas',
-  },
-  {
-    id: '9',
-    label: 'Alimosho',
-    path: 'caas',
-  },
-  {
-    id: '10',
-    label: 'Mushin Lagos (Sub-region)',
-    path: 'caas',
-  },
-];
-
-// VI- Lagos (Sub region)
-
-// Ikoyi - Lagos(Sub-region)
-
-// Ajeromi-Ifelodun Lagos (Sub-region)
-
-// Ajah-Chevero Lagos (Sub region)
-
-//  Surulere -(Sub region)
-
-// Ikeja- Lagos (Sub-region
-
-// Alimosho- Lagos (Sub-region)
-
-// Somolu-Lagos (Sub-region)
-
-// Amuwo-Odofin  - Lagos (Sub-region)
-
-// Yaba- Lagos (Sub-region)
-
-// Lagos Mainland (Ebute-metta Lagos region)
-
-// Alimosho
-
-// Kosofe Lagos (Sub-region)
-
-// Mushin Lagos (Sub-region)
-
-// Oshodi Lagos (Sub-region)
-
-// Ojo- Lagos (Sub-region)
-
-// Illupeju Lagos (Sub-region)
 
 interface StoreProviderProps {
   children: React.ReactNode;
 }
 
-interface Option {
-  id: string;
-  label: string;
-  path: string;
+type StoreAction = { type: any; payload: any };
+
+interface IStoreContext {
+  localmarket: Array<any>;
+  supermarket: Array<any>;
+  getMarketId: (id: string, city: string) => Promise<void> 
+  marketList: any[]
+  isLoading: boolean
+  
+  // getStoresById: (id:string) => any[]
 }
 
-// interface Props {
-//   options: Option[];
-// }
-
-type StoreItem = {
-  id: string;
-  name: string;
-  price: number;
-  amount: number;
+const initialState: IStoreContext =  {
+  localmarket: [],
+  supermarket: [],
+  getMarketId: async(id, city) => {} ,
+  marketList: [],
+  isLoading: false
+  // getStoresById: getStoreById
 };
 
-type StoreState = {
-  items: StoreItem[];
-  totalAmount: number;
-  // options: Option
-};
-
-type StoreAction = { type: 'ADD'; item: StoreItem } | { type: 'REMOVE'; id: string };
-
-const defaultStoreState: StoreState = {
-  items: [],
-  totalAmount: 0,
-  // options : storeOptions
-};
-
-const storeReducer = (state: StoreState, action: StoreAction): StoreState => {
-  if (action.type === 'ADD') {
-    const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount;
-
-    let updatedItems: StoreItem[];
-    const existingItemIdx = state.items.findIndex((item) => item.id === action.item.id);
-    const existingItem = state.items[existingItemIdx];
-
-    if (existingItem) {
-      const updatedItem = {
-        ...existingItem,
-        amount: existingItem.amount + action.item.amount,
+const reducer = (state:IStoreContext, action:StoreAction) => {
+  switch (action.type) {
+    case "FETCH_DATA": {
+      const { localmarketData, supermarketData } = action.payload;
+      return {
+        ...state,
+        localmarket: localmarketData.data.local_market,
+        supermarket: supermarketData.data.supermarket,
+        // isLoading: false
       };
-      updatedItems = [...state.items];
-      updatedItems[existingItemIdx] = updatedItem;
-    } else {
-      updatedItems = state.items.concat(action.item);
     }
-
-    return {
-      items: updatedItems,
-      totalAmount: updatedTotalAmount,
-    };
+    case "UPDATE_LIST": {
+      const stores = action.payload;
+      return {
+        ...state,
+        marketList: stores,
+      //  isLoading: false
+      };
+      }
+    default:
+      return state;
   }
-  if (action.type === 'REMOVE') {
-    const existingItemIdx = state.items.findIndex((item) => item.id === action.id);
-    const existingItem = state.items[existingItemIdx];
-    const updatedTotalAmount = state.totalAmount - existingItem.price;
-
-    let updatedItems: StoreItem[];
-    if (existingItem.amount === 1) {
-      updatedItems = state.items.filter((item) => item.id !== action.id);
-    } else {
-      const updatedItem = { ...existingItem, amount: existingItem.amount - 1 };
-      updatedItems = [...state.items];
-      updatedItems[existingItemIdx] = updatedItem;
-    }
-    return {
-      items: updatedItems,
-      totalAmount: updatedTotalAmount,
-    };
-  }
-  return defaultStoreState;
 };
 
-const StoreProvider: React.FC<StoreProviderProps> = (props) => {
-  const [storeState, dispatchCartAction] = useReducer(storeReducer, defaultStoreState);
+const StoreContext = createContext<IStoreContext>(initialState);
 
-  const addItemHandler = (item: StoreItem) => {
-    dispatchCartAction({ type: 'ADD', item: item });
-  };
-  const removeItem = (id: string) => {
-    dispatchCartAction({ type: 'REMOVE', id: id });
+const StoreProvider = ({ children }:StoreProviderProps) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const Navigate = useNavigate()
+  // const history = useHistory();
+
+  const fetchData = async () => {
+    try {
+      state.isLoading = true
+      const localMarket_req = await makeApiRequest("/local-markets", 'GET');
+    const supermarket_req = await makeApiRequest("/supermarkets", 'GET');
+    
+    const localmarketData = localMarket_req
+    const supermarketData =  supermarket_req
+      
+    dispatch({ type: "FETCH_DATA", payload: { localmarketData, supermarketData } });
+      
+    } catch (error) {
+      throw error
+    }
+    
   };
 
+  const getMarketId = async (id: string, city: string) => {
+    try {
+      state.isLoading = true
+      const stores = await getStoreById(id);
+      if (stores) {
+        console.log('stores', state.isLoading);
+        storeItem('id', id)
+        storeItem('city', city)
+        dispatch({ type: "UPDATE_LIST", payload: stores });
+        // state.marketList &&  Navigate(name)
+      }
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+  
+  
+
+  useEffect(() => {
+    fetchData();
+    const marketId = getItem('id')
+    const marketCity = getItem('city')
+    if (!state.marketList.length && marketId && marketCity) {
+      getMarketId(marketId, marketCity)
+    }
+  }, [state.marketList]);
 
   const storeContextValue = {
-    items: storeState.items,
-    totalAmount: storeState.totalAmount,
-    options: storeOptions,
-    addItem: addItemHandler,
-    removeItem: removeItem,
-    // localMarkets: 
+    localmarket: state.localmarket,
+    supermarket: state.supermarket,
+    getMarketId: getMarketId,
+    marketList: state.marketList,
+  isLoading: state.isLoading
+
+    // getStoresById: getStoresById,
   };
 
-  return <StoreContext.Provider value={storeContextValue}>{props.children}</StoreContext.Provider>;
+  return (
+    <StoreContext.Provider value={storeContextValue}>
+      {children}
+    </StoreContext.Provider>
+  );
 };
+const useStore = () => useContext(StoreContext);
 
-export default StoreProvider;
+export { StoreProvider, useStore };

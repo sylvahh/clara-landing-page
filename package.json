@@ -2,7 +2,6 @@
   "name": "clara-landing-page",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -11,6 +10,7 @@
     "@types/node": "^16.18.21",
     "@types/react": "^18.0.30",
     "@types/react-dom": "^18.0.11",
+    "axios": "^1.4.0",
     "flickity": "^2.3.0",
     "flowbite": "^1.6.5",
     "react": "^18.2.0",
@@ -51,5 +51,4 @@
   "devDependencies": {
     "@types/react-slick": "^0.23.10"
   }
-
 }

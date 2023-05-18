@@ -1,17 +1,12 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import MarketDropDown from '../components/CustomDropdown';
 import TopNav from '../components/TopNav';
 import blenco from '../assets/blenco.png';
 import supermarket from '../assets/supermarket.png';
-import ladyInCart from "../assets/ladyn'cart.png";
-// woman_simling-removebg-preview
-// woman-simling.jpg
 import womanSmiling2 from '../assets/woman_holding_groceries-removebg-preview.png';
-
 import womanSmiling from '../assets/woman_simling-removebg-preview.png';
 import vectorYellow from '../assets/Vector~yellow.png';
 import vectorGreen from '../assets/Vector~green.png';
-import motherAndSon from '../assets/son-Mom.png';
 import handshake from '../assets/handshake.svg';
 import constructionWorker from '../assets/construction~worker.svg';
 import deviceShop from '../assets/device~shop.svg';
@@ -25,13 +20,16 @@ import cardPayment from '../assets/card~payment.png';
 
 import Cards from '../components/cards/Cards';
 import Carousel from '../components/carousel/Carousel';
-import { MarketOptions, makeApiRequest } from '../utilities';
+import { MarketOptions, getStoreById, makeApiRequest } from '../utilities';
 import CustomDropdown from '../components/CustomDropdown';
+import StoreContext from '../store/StoreContext';
+import { useStore } from '../store/StoreProvider';
 
 const HomePage = () => {
-  makeApiRequest('/api/supermarkets', 'GET',).then(res => console.log(res))
+  // const {getStoresById} = useStore()
   
   useEffect(() => {
+    // getStoresById('1')
   },[])
   return (
     <Fragment>
