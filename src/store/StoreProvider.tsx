@@ -108,7 +108,6 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     try {
       const stores = await getStoreById(id, storeCase);
       if (stores) {
-        console.log('stores', state.isLoading);
         switch (storeCase) {
           case 'MARKET_STORES':
             storeItem('MS_id', id);
@@ -132,7 +131,8 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
       switch (cartCase) {
         case 'ADD': //add to cart
           const add_res = await makeApiRequest(`/add-to-cart/${id}`, 'GET');
-          if (add_res) console.log(add_res);
+          if (add_res)
+            console.log(add_res);
           // makeApiRequest('/cart', 'GET', {}, token).then((res) => console.log(res));
 
           break;

@@ -25,7 +25,7 @@ export async function makeApiRequest(url: string, method: string, body?: object,
       options.body = JSON.stringify(body);
     }
     let response = await fetch(baseUrl + url, options);
-    console.log(response.headers)
+    // console.log(response.headers)
     let data = await response.json();
     if (!response.ok) {
       throw new Error(data.message);
@@ -49,7 +49,6 @@ export const getStoreById = async (id: string, storeCase: string) => {
         const product_res = await makeApiRequest('/products-in-store', 'GET');
         const { product } = product_res.data;
         const products = product.filter((store: { store_id: string }) => store.store_id === id);
-        console.log('products', products);
         return products;
       default:
         break;

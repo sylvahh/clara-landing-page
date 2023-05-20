@@ -1,5 +1,6 @@
 {
-  "name": "clara-landing-page",
+  "name": "clara",
+  "homepage": "https//staging.myclara.com.ng",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
