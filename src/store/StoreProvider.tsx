@@ -133,7 +133,8 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
           const add_res = await makeApiRequest(`/add-to-cart/${id}`, 'GET');
           if (add_res)
             console.log(add_res);
-          // makeApiRequest('/cart', 'GET', {}, token).then((res) => console.log(res));
+          const token = add_res.data._token
+          makeApiRequest('/cart', 'GET', {}, token).then((res) => console.log(res));
 
           break;
         case 'REMOVE': // remove cart by id

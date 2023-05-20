@@ -1,9 +1,12 @@
+// "homepage": "https//staging.myclara.com.ng",
+
+
 export const imageBaseUrl = 'https://myclara.com.ng';
 
   export const cartPath = window.location.pathname+'/cart'
    
 
-export async function makeApiRequest(url: string, method: string, body?: object, token?: string) {
+export async function makeApiRequest(url: string, method: string, body?: object,  token?: string) {
   interface Options extends RequestInit {
     method: string;
     headers: HeadersInit;
@@ -11,11 +14,13 @@ export async function makeApiRequest(url: string, method: string, body?: object,
   }
   try {
     const baseUrl = 'https://myclara.com.ng/engine/api';
-    const headers: HeadersInit = { 'Content-Type': 'application/json', Accept: 'application/json' };
-
+    const headers: HeadersInit = { 'Content-Type': 'application/json', Accept: 'application/json', Cookie: 'clara_session='+token, };
+// console.log(headers.Cookie)
     if (token) {
       headers.Authorization = `Bearer ${token}`;
+    
     }
+
 
     let options: Options = {
       method,
@@ -25,11 +30,14 @@ export async function makeApiRequest(url: string, method: string, body?: object,
       options.body = JSON.stringify(body);
     }
     let response = await fetch(baseUrl + url, options);
-    // console.log(response.headers)
+    let resheaders = await response.headers
+    console.log(resheaders)
     let data = await response.json();
     if (!response.ok) {
       throw new Error(data.message);
     }
+    // const setCookieHeader = response.headers.get('Set-Cookie');
+    // console.log(setCookieHeader)
     return data;
   } catch (error) {
     throw error;

@@ -34,7 +34,7 @@ const  Products = (props: productProps) => {
             <span className=' sm:text-xl font-bold text-tertiary-100'>{'₦'+newPrice}</span>
             { Number(oldPrice) > 0 && <span> ₦ <s className='  text-bold text-base text-black-sub'> {oldPrice} </s></span>}
           </div>
-          <button onClick={()=> cartUtils(id,"ADD")} className='w-full lg:w-auto  sm:inline-flex sm:items-center sm:space-x-3 px-5 py-2 sm:p-3 rounded-md bg-tertiary-100 text-white font-semibold  text-base'>
+          <button onClick={()=> cartUtils(id,"ADD")} className='w-full lg:w-auto  sm:inline-flex sm:justify-center sm:items-center sm:space-x-3 px-5 py-2 sm:p-3 rounded-md bg-tertiary-100 text-white font-semibold  text-base'>
             {cart} <span> Add </span>
           </button>
         </div>
