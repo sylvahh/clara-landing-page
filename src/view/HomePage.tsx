@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useContext } from 'react';
+import React, { Fragment, useEffect} from 'react';
 import TopNav from '../components/TopNav';
 import blenco from '../assets/blenco.png';
 import supermarket from '../assets/supermarket.png';

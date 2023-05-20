@@ -14,7 +14,7 @@ type subNavProps = {
 
 const SubNav = (props: subNavProps) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const forebiddenPaths = ['/', '/supermarkets', 'localmarkts'];
+  const forebiddenPaths = ['/', '/login', '/supermarkets', 'localmarkts'];
   const { showCart, setShowCart, scrolled } = props;
 
   return (

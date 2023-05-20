@@ -15,12 +15,13 @@ const TopNav = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showCart, setShowCart] = useState(false)
 
-  const forebiddenPaths = ['/', '/supermarkets', '/localmarkets'];
+  const forebiddenPaths = ['/', '/login', '/supermarkets', '/localmarkets' ];
   const currentPath = window.location.pathname;
 
   const checks = (): string => {
     if (scrolled) return 'bg-alt-tertiary shadow-lg py-3';
     else if (hasSubNav) return 'shadow-lg  sm:bg-primary sm:shadow-none py-4';
+    else if (currentPath === '/login') return'hidden'
     else return 'bg-primary py-3 sm:py-5 shadow';
   };
   useEffect(() => {
@@ -97,7 +98,7 @@ const TopNav = () => {
                 </li>
               </ul>
             </div>
-            <div className='flex space-x-20 sm:text-lg w-full sm:w-auto'>
+            <div className='flex justify-end sm:justify-start sm:space-x-20 sm:text-lg w-full sm:w-auto'>
               <button
                 className={`${
                   !'/'.includes(currentPath) ? 'hidden' : 'hidden sm:block'

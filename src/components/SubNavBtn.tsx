@@ -8,12 +8,12 @@ type dropdownProps = {
 
 function SubNavBtn({ showDrawer, setShowDrawer }: dropdownProps) {
   return (
-    <div>
+    <div className=' cursor-pointer'>
       <li
-        onMouseEnter={() => {
-          setShowDrawer(true);
-        }}
-        onClick={() => setShowDrawer(!showDrawer)}
+        // onMouseEnter={() => {
+        //   setShowDrawer(true);
+        // }}
+        // onClick={() => setShowDrawer(!showDrawer)}
         className='capitalize font-bold  text-lg  text-alt-sec active:text-tertiary-100 inline-flex items-center'
       >
         markets {downChevron}

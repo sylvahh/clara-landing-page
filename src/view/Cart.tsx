@@ -1,32 +1,64 @@
 import React from 'react';
 import shawarma2 from '../assets/shawarma2.jpeg';
-import { arrowLeft, ratings, trash } from '../utilities';
+import { arrowLeft, trash } from '../utilities';
+import { useNavigate } from 'react-router-dom';
+import { useStore } from '../store/StoreProvider';
+import {useState, useEffect} from 'react'
 
-const item =  <tr className='text-left'>
-<td className='flex   justify-evenly px-6 py-4'>
-  <img src={shawarma2} width={'15%'} height={'auto'} alt='' className='rounded-lg object-contain' />
-  <div className='flex flex-col space-y-1'>
-    <span className=' font-semibold text-lg'>Big shawarma with chicken</span>
-    {ratings}
-  </div>
-</td>
 
-<td className='px-6 py-4'>
-  <span>₦2132</span>
-</td>
-<td className='px-6 py-4'>
-  <input type='number' value={1} step={1} min={1} max={10} />
-</td>
-<td className='px-6 py-4'>₦2132</td>
-<td className='px-6 py-4'>
-  {' '}
-  <button className=' text-red-600'>{trash}</button>{' '}
-</td>
-</tr>
 
 const Cart = () => {
+  const [quantity, setQuantity] = useState(1)
+  const Navigate = useNavigate()
+  const { cartUtils } = useStore()
+  const handleQuantity = (quantCase: string) => {
+    switch (quantCase) {
+      case 'INCREMENT':
+        setQuantity(prev => prev++)
+        break;   
+      case 'DECREMENT':
+        setQuantity(prev => prev--)
+        break;
+      default:
+    }
+    cartUtils('1','UPDATE',quantity)
+  }
+  const handleDeleteItem = () => {
+    cartUtils('1', 'REMOVE')
+  }
+useEffect(() => {
+  
+}, [quantity])
+
+const item =  <tr className='text-left'>
+<td className='px-6 py-4'>
+  <img src={shawarma2} height={'auto'} alt='' className='rounded-lg object-contain w-[75%]'/>
+
+</td>
+<td className='px-6 py-4'>
+  <span className=' font-semibold text-sm sm:text-lg '>Big shawarma with..</span>
+</td>
+<td className='px-6 py-4 font-medium text-lg'>
+  <span>₦2132</span>
+</td>
+  <td className='px-6 py-4'>
+    <div className='flex space-x-3 font-bold text-lg'>
+
+    <button onClick={()=> handleQuantity('INCREMENT')} className=' font-semibold text-lg'>+</button>
+      <span className='px-4 py-3 border rounded'>{quantity }</span>
+    <button onClick={()=> handleQuantity('DECREMENT')} className=' font-semibold text-lg'>-</button>
+    </div>
+</td>
+<td className='px-6 py-4 font-medium text-lg'> <span> ₦2132 </span></td>
+<td className='px-6 py-4'>
+  {' '}
+  <button onClick={handleDeleteItem} className=' text-red-600'>{trash}</button>{' '}
+</td>
+</tr>
   return (
     <div className='px-5'>
+      <div className={` block w-full py-10 sm:mt-[8rem]`}> </div>
+
       <div className='text-left py-10 space-y-3'>
         <h3 className='font-bold text-2xl text-black-sub'>Cart</h3>
         <span className='font-semibold text-black-sub'>
@@ -40,6 +72,9 @@ const Cart = () => {
               <tr>
                 <th scope='col' className='px-6 py-3 font-semibold text-black-sub'>
                   Product name
+                </th>
+                <th scope='col' className=' sr-only px-6 py-3 font-semibold text-black-sub'>
+                  product name
                 </th>
                 <th scope='col' className='px-6 py-3 font-semibold text-black-sub'>
                   Unit price
@@ -59,15 +94,7 @@ const Cart = () => {
               {item}
               {item}
               {item}
-              {item}
-              {item}
-              {item}
-              {item}
-              {item}
-              {item}
-
-        
-             
+              {item}   
             </tbody>
           </table>
         </div>
@@ -77,13 +104,13 @@ const Cart = () => {
             <span className=' font-semibold text-lg text-black-sub'>Subtotal</span>
             <span className='font-bold text-lg text-tertiary-100'>₦3,380</span>
           </div>
-          <button className='bg-tertiary-100 text-white font-semibold hover:bg-primary transition-all duration-500 p-3 rounded-md '>
+          <button onClick={()=> Navigate('/login')} className='bg-tertiary-100 text-white font-semibold hover:bg-primary transition-all duration-500 p-3 rounded-md '>
             Proceed to Checkout
           </button>
         </div>
       </div>
-      <div className='my-10'>
-        <button className='flex bg-tertiary-100 text-white hover:bg-primary transition-all duration-500 p-3 rounded-md  text-lg font-bold  '>
+      <div className=' mt-5 sm:mt-10 mb-20 sm:mb-20'>
+        <button onClick={()=>  window.history.go(-1)} className='flex  sm:bg-tertiary-100 text-tertiary sm:text-white hover:bg-primary transition-all duration-500 p-3 rounded-md  text-lg font-bold  '>
           {arrowLeft} <span className='ml-3'> Continue shopping </span>
         </button>
       </div>

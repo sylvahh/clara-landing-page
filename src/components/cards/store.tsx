@@ -17,8 +17,8 @@ const Store = (props: StoreProps) => {
   const {getMarketId} = useStore()
 
   const handleProduct = (storeId: string,  storeName: string) => {
-    getMarketId(storeId, 'STORES_PRODUCTS').then(()=> Navigate(storeName) )
-    // 
+    getMarketId(storeId, 'STORES_PRODUCTS')
+    Navigate(storeName)
   }
   return (
     <div className='relative rounded-lg h-full shadow-sm shadow-black hover:shadow-black hover:shadow-md hover:-translate-y-0.5 transition-all'>

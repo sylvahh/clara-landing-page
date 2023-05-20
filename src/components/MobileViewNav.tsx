@@ -1,4 +1,6 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { cartPath } from '../utilities'
 type MobileViewProps = {
     hasSubNav: boolean
     setShowDrawer: any
@@ -6,7 +8,9 @@ type MobileViewProps = {
 }
 
 const MobileViewNav = (props: MobileViewProps) => {
-    const {hasSubNav, setShowDrawer, showDrawer} = props
+  const { hasSubNav, setShowDrawer, showDrawer } = props
+  const Navigate = useNavigate()
+
   return (
     <div className={`${!hasSubNav && 'hidden'} w-[100%]   fixed bottom-0 bg-primary z-30`}>
         <div className='flex justify-between px-5 py-5 sm:px-10 w-[100%]  transition-all  sm:text-xl  sm:w-auto lg:hidden'>
@@ -29,7 +33,7 @@ const MobileViewNav = (props: MobileViewProps) => {
             </svg>
           </button>
               {/* home */}
-          <button className=' text-black flex items-center  space-x-1  bg-transparent  hover:text-tertiary  transition-all'>
+          <button onClick={()=> Navigate('/')} className=' text-black flex items-center  space-x-1  bg-transparent  hover:text-tertiary  transition-all'>
             {' '}
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -64,29 +68,9 @@ const MobileViewNav = (props: MobileViewProps) => {
               />
             </svg>
           </button>
-            {/* wishlist */}
-          <button className=' relative text-black flex items-center  space-x-1  bg-transparent  hover:text-tertiary  transition-all '>
-            {' '}
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth={1.5}
-              stroke='currentColor'
-              className='w-7 h-7'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z'
-              />
-            </svg>
-            <div className='absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-black bg-white  rounded-full -top-3 -right-3'>
-              20
-            </div>
-              </button>
+     
               {/* cart */}
-          <button className='relative text-black flex items-center  space-x-1  bg-transparent  hover:text-tertiary  transition-all'>
+          <button onClick={()=> Navigate(cartPath)}  className='relative text-black flex items-center  space-x-1  bg-transparent  hover:text-tertiary  transition-all'>
             {' '}
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -103,7 +87,7 @@ const MobileViewNav = (props: MobileViewProps) => {
               />
             </svg>
             <div className='absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-black bg-white  rounded-full -top-3 -right-3'>
-              20
+              0
             </div>
           </button>
         </div>
