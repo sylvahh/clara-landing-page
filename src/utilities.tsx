@@ -1,12 +1,10 @@
 // "homepage": "https//staging.myclara.com.ng",
 
-
 export const imageBaseUrl = 'https://myclara.com.ng';
 
-  export const cartPath = window.location.pathname+'/cart'
-   
+export const cartPath = window.location.pathname + '/cart';
 
-export async function makeApiRequest(url: string, method: string, body?: object,  token?: string) {
+export async function makeApiRequest(url: string, method: string, body?: object, token?: string) {
   interface Options extends RequestInit {
     method: string;
     headers: HeadersInit;
@@ -14,13 +12,15 @@ export async function makeApiRequest(url: string, method: string, body?: object,
   }
   try {
     const baseUrl = 'https://myclara.com.ng/engine/api';
-    const headers: HeadersInit = { 'Content-Type': 'application/json', Accept: 'application/json', Cookie: 'clara_session='+token, };
-// console.log(headers.Cookie)
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Cookie: 'clara_session=' + token,
+      credentials: 'include',
+    };
     if (token) {
       headers.Authorization = `Bearer ${token}`;
-    
     }
-
 
     let options: Options = {
       method,
@@ -30,14 +30,11 @@ export async function makeApiRequest(url: string, method: string, body?: object,
       options.body = JSON.stringify(body);
     }
     let response = await fetch(baseUrl + url, options);
-    let resheaders = await response.headers
-    console.log(resheaders)
+
     let data = await response.json();
     if (!response.ok) {
       throw new Error(data.message);
     }
-    // const setCookieHeader = response.headers.get('Set-Cookie');
-    // console.log(setCookieHeader)
     return data;
   } catch (error) {
     throw error;
@@ -67,8 +64,64 @@ export const getStoreById = async (id: string, storeCase: string) => {
   }
 };
 
-export const storeItem = (id: string, data: any) => sessionStorage.setItem(id, data);
-export const getItem = (id: string) => sessionStorage.getItem(id);
+export const updateDuplicateItem = (data: any, id: string, updateCase?: string, quantity?: number) => {
+  let updatedItem: any[] = [];
+  let tempStorage: any = null;
+  const index = data.findIndex((item: { product_id: string }) => item.product_id === id);
+  if (index !== -1) {
+    tempStorage = data[index];
+    const { c_price } = tempStorage;
+
+    data.splice(index, 1);
+
+    if (updateCase === 'INCREMENT') {
+      tempStorage.quantity += quantity || 1;
+    } else {
+      tempStorage.quantity -= quantity || 1;
+    }
+
+    tempStorage.subTotal = Number(c_price) * Number(tempStorage.quantity);
+
+    updatedItem = [...data, tempStorage];
+
+    console.log(updatedItem);
+  }
+  return updatedItem;
+};
+
+export const addItemToStorage = async (id: string, data: any) => {
+
+  const addTocartRes = await makeApiRequest(`/add-to-cart/${id}`, 'GET');
+  if (addTocartRes) console.log(addTocartRes);
+  const { cart } = addTocartRes.data;
+
+  let cartData: any[] = data ? JSON.parse(data) : [];
+
+  const isDuplicate = cartData.some(
+    //checking for duplicate items
+    (item: { product_id: string }) => item.product_id === cart.product_id
+  );
+
+  let currentData: any[] = [];
+
+  if (isDuplicate) {
+    console.info('found a duplicate item in the cart updating the item quantity... ');
+    const updatedItem = updateDuplicateItem(cartData, cart.product_id, 'INCREMENT');
+    currentData = [...updatedItem];
+  } else {
+    currentData = [...cartData, { ...cart, subTotal: cart.c_price }];
+  }
+
+  sessionStorage.setItem('cartData', JSON.stringify(currentData)); // Store the updated data in session storage
+  return true;
+};
+
+export const storeItem = (id: string, data: any) =>
+  sessionStorage.setItem(id, JSON.stringify(data));
+export const getItem = (id: string) => {
+  const getData = sessionStorage.getItem(id);
+  if (getData) return JSON.parse(getData);
+};
 
 export type Option = {
   id: string;
@@ -199,11 +252,15 @@ export const findPaths = (forebiddenPaths: string[] | string): boolean => {
 
 // icons and layout utils
 
-export const NO_DATA = <div className="absolute top-10 flex justify-center items-center  w-full h-full">
-<h1 className="font-bold text-3xl text-black-sub"> No data was found </h1>
-</div>
-export const storeNameLoading =  <div className='animate-pulse py-5 w-[25%] bg-gray-200 rounded dark:bg-gray-700'></div>
-export  const productLoading = (
+export const NO_DATA = (
+  <div className='absolute top-10 flex justify-center items-center  w-full h-full'>
+    <h1 className='font-bold text-3xl text-black-sub'> No data was found </h1>
+  </div>
+);
+export const storeNameLoading = (
+  <div className='animate-pulse py-5 w-[25%] bg-gray-200 rounded dark:bg-gray-700'></div>
+);
+export const productLoading = (
   <div
     role='status'
     className='max-w-sm p-4 border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-700'
@@ -224,7 +281,7 @@ export  const productLoading = (
     <div className='h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5'></div>
     <div className='h-2 bg-gray-200 rounded-full dark:bg-gray-700'></div>
     <div className='flex items-center mt-4 justify-between space-x-3'>
-           <div className='w-48 h-6 bg-gray-200 rounded-sm dark:bg-gray-700'></div>
+      <div className='w-48 h-6 bg-gray-200 rounded-sm dark:bg-gray-700'></div>
 
       <div>
         <div className='h-8 px-5 py-2 sm:p-3 bg-gray-200 rounded-md dark:bg-gray-700 w-32 mb-2'></div>
@@ -234,7 +291,7 @@ export  const productLoading = (
   </div>
 );
 
-export  const marketLoading = (
+export const marketLoading = (
   <div
     role='status'
     className='max-w-sm p-4 border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-700'
@@ -255,7 +312,6 @@ export  const marketLoading = (
     <div className='h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5'></div>
     <div className='h-2 bg-gray-200 rounded-full dark:bg-gray-700'></div>
     <div className='flex items-center mt-4 justify-center space-x-3'>
-
       <div>
         <div className='h-6 px-5 py-2 sm:p-3  bg-gray-200 rounded-md dark:bg-gray-700 w-32 mb-2'></div>
       </div>
@@ -263,7 +319,7 @@ export  const marketLoading = (
     <span className='sr-only'>Loading...</span>
   </div>
 );
- 
+
 export const downChevron = (
   <svg
     xmlns='http://www.w3.org/2000/svg'

@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useReducer, useEffect } from 'react';
-import { getItem, getStoreById, makeApiRequest, storeItem } from '../utilities';
+import { addItemToStorage, getItem, getStoreById, makeApiRequest, storeItem, updateDuplicateItem } from '../utilities';
 
 interface StoreProviderProps {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ interface IStoreContext {
   localmarket: Array<any>;
   supermarket: Array<any>;
   getMarketId: (id: string, storeCase: string, city?: string) => Promise<void>;
-  cartUtils: (id: string, cartCase: string, quantity?: number) => Promise<void>;
+  cartUtils: (id: string, cartCase: string, updateCase?:string, quantity?: number) => Promise<void>;
   marketList: any[];
   productList: any[];
   isLoading: boolean;
@@ -23,7 +23,7 @@ const initialState: IStoreContext = {
   localmarket: [],
   supermarket: [],
   getMarketId: async (id, storeCase, city) => {},
-  cartUtils: async (id, cartCase, quantity) => {},
+  cartUtils: async (id, cartCase,updateCase, quantity) => {},
   marketList: [],
   productList: [],
   isLoading: false,
@@ -73,6 +73,15 @@ const reducer = (state: IStoreContext, action: StoreAction) => {
         dataFetched: status,
       };
     }
+    case 'ADDED_TO_CART': {
+      const data = action.payload;
+
+      return {
+        ...state,
+        // isLoading: false,
+      };
+    }
+
     default:
       return state;
   }
@@ -90,7 +99,6 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
   const fetchData = async () => {
     dispatch({ type: 'IS_LOADING', payload: true });
     try {
-      // state.isLoading = true;
       const localMarket_req = await makeApiRequest('/local-markets', 'GET');
       const supermarket_req = await makeApiRequest('/supermarkets', 'GET');
 
@@ -126,15 +134,18 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     }
   };
 
-  const cartUtils = async (id: string, cartCase: string, quantity?: number) => {
+  const cartUtils = async (id: string, cartCase: string, updateCase?:string,) => {
+  const getCartData = sessionStorage.getItem('cartData');
+
     try {
       switch (cartCase) {
         case 'ADD': //add to cart
-          const add_res = await makeApiRequest(`/add-to-cart/${id}`, 'GET');
-          if (add_res)
-            console.log(add_res);
-          const token = add_res.data._token
-          makeApiRequest('/cart', 'GET', {}, token).then((res) => console.log(res));
+          
+          // populate new cart data to session storage
+          const addToStorageRes = await addItemToStorage(id, getCartData );
+          if (addToStorageRes) {
+            console.log('item added')
+          }
 
           break;
         case 'REMOVE': // remove cart by id
@@ -142,8 +153,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
           if (remove_res) console.log(remove_res);
           break;
         case 'UPDATE': // update quantity
-          const data = { id, quantity };
-          const update_res = await makeApiRequest(`/update-cart-quantity`, 'PATCH', data);
+          const update_res =updateDuplicateItem(getCartData,id,updateCase) ;
           if (update_res) console.log(update_res);
           break;
         case 'REMOVE_CART': //remove all items in cart

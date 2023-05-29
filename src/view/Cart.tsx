@@ -1,6 +1,6 @@
 import React from 'react';
 import shawarma2 from '../assets/shawarma2.jpeg';
-import { arrowLeft, trash } from '../utilities';
+import { arrowLeft, imageBaseUrl, trash } from '../utilities';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/StoreProvider';
 import {useState, useEffect} from 'react'
@@ -8,53 +8,50 @@ import {useState, useEffect} from 'react'
 
 
 const Cart = () => {
-  const [quantity, setQuantity] = useState(1)
   const Navigate = useNavigate()
   const { cartUtils } = useStore()
-  const handleQuantity = (quantCase: string) => {
-    switch (quantCase) {
-      case 'INCREMENT':
-        setQuantity(prev => prev++)
-        break;   
-      case 'DECREMENT':
-        setQuantity(prev => prev--)
-        break;
-      default:
-    }
-    cartUtils('1','UPDATE',quantity)
+  const getCartData = sessionStorage.getItem('cartData')
+  const cartData:any[] = getCartData? JSON.parse(getCartData): []
+
+  const handleQuantity = (productID : string , quantCase: string) => {    
+    cartUtils(productID,'UPDATE',quantCase)
   }
-  const handleDeleteItem = () => {
-    cartUtils('1', 'REMOVE')
+
+  const handleDeleteItem = (productId :string ) => {
+    cartUtils(productId, 'REMOVE')
   }
 useEffect(() => {
   
-}, [quantity])
+}, [])
 
-const item =  <tr className='text-left'>
-<td className='px-6 py-4'>
-  <img src={shawarma2} height={'auto'} alt='' className='rounded-lg object-contain w-[75%]'/>
-
-</td>
-<td className='px-6 py-4'>
-  <span className=' font-semibold text-sm sm:text-lg '>Big shawarma with..</span>
-</td>
-<td className='px-6 py-4 font-medium text-lg'>
-  <span>₦2132</span>
-</td>
-  <td className='px-6 py-4'>
-    <div className='flex space-x-3 font-bold text-lg'>
-
-    <button onClick={()=> handleQuantity('INCREMENT')} className=' font-semibold text-lg'>+</button>
-      <span className='px-4 py-3 border rounded'>{quantity }</span>
-    <button onClick={()=> handleQuantity('DECREMENT')} className=' font-semibold text-lg'>-</button>
-    </div>
-</td>
-<td className='px-6 py-4 font-medium text-lg'> <span> ₦2132 </span></td>
-<td className='px-6 py-4'>
-  {' '}
-  <button onClick={handleDeleteItem} className=' text-red-600'>{trash}</button>{' '}
-</td>
-</tr>
+  const item = !cartData ? <p>no item in the cart yet</p> : cartData.map((item: {product_id:string,  p_name: string, img: string, quantity:string, c_price:string, subTotal: number, }, idx) => {
+    return    <tr className='text-left' key={idx}>
+    <td className='px-6 py-4'>
+      <img src={imageBaseUrl+item.img} height={'auto'} alt='' className='rounded-lg object-contain w-[100%]'/>
+    
+    </td>
+    <td className='px-6 py-4'>
+        <span className=' font-semibold text-sm sm:text-lg '>{item.p_name}</span>
+    </td>
+    <td className='px-6 py-4 font-medium text-lg'>
+      <span>₦{item.c_price}</span>
+    </td>
+      <td className='px-6 py-4'>
+        <div className='flex space-x-3 font-bold text-lg'>
+    
+        <button onClick={()=> handleQuantity(item.product_id, 'INCREMENT')} className=' font-semibold text-lg'>+</button>
+          <span className='px-4 py-3 border rounded'>{item.quantity }</span>
+        <button onClick={()=> handleQuantity(item.product_id,'DECREMENT')} className=' font-semibold text-lg'>-</button>
+        </div>
+    </td>
+    <td className='px-6 py-4 font-medium text-lg'> <span> ₦{item.subTotal} </span></td>
+    <td className='px-6 py-4'>
+      {' '}
+      <button onClick={()=> handleDeleteItem(item.product_id)} className=' text-red-600'>{trash}</button>{' '}
+    </td>
+    </tr>
+  }) 
+ 
   return (
     <div className='px-5'>
       <div className={` block w-full py-10 sm:mt-[8rem]`}> </div>
@@ -91,10 +88,7 @@ const item =  <tr className='text-left'>
               </tr>
             </thead>
             <tbody>
-              {item}
-              {item}
-              {item}
-              {item}   
+              {item}  
             </tbody>
           </table>
         </div>
