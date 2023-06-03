@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useReducer, useEffect, useState, useCallback } from 'react';
-import { addItemToStorage, getItem, getStoreById, makeApiRequest, storeItem, updateDuplicateItem } from '../utilities';
+import { addItemToStorage, getItem, getStoreById, makeApiRequest, removeItem, storeItem, updateDuplicateItem } from '../utilities';
 
 interface StoreProviderProps {
   children: React.ReactNode;
@@ -13,8 +13,8 @@ interface IStoreContext {
   getMarketId: (id: string, storeCase: string, city?: string) => Promise<void>;
   cartUtils: (id: string, cartCase: string, updateCase?: string, quantity?: number) => Promise<void>;
   cartTotal: number;
-  cartItems: number;
-
+  cartItemsCount: number;
+  cartItems: any[];
   marketList: any[];
   productList: any[];
   isLoading: boolean;
@@ -28,7 +28,8 @@ const initialState: IStoreContext = {
   getMarketId: async (id, storeCase, city) => {},
   cartUtils: async (id, cartCase, updateCase, quantity) => { },
   cartTotal: 0,
-  cartItems:0,
+  cartItemsCount: 0,
+  cartItems: [],
   marketList: [],
   productList: [],
   isLoading: false,
@@ -80,7 +81,7 @@ const reducer = (state: IStoreContext, action: StoreAction) => {
         dataFetched: status,
       };
     }
-    case 'ADDED_TO_CART': {
+    case 'UPDATED_CART': {
       const data = action.payload;
       let cartSum = 0;
       let quantity= 0
@@ -88,12 +89,13 @@ const reducer = (state: IStoreContext, action: StoreAction) => {
         cartSum += Number(item.subTotal)
         quantity += item.quantity
       })
-      console.log(cartSum, quantity)
+      console.log(cartSum, quantity, data)
 
       return {
         ...state,
         cartTotal: cartSum,
-        cartItems:quantity
+        cartItemsCount: quantity,
+        cartItems:data
       };
     }
 
@@ -160,18 +162,22 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
           // populate new cart data to session storage
           const addToStorageRes = await addItemToStorage(id, CartData );
           if (addToStorageRes) {
-            dispatch({ type: 'ADDED_TO_CART', payload:addToStorageRes});
+            dispatch({ type: 'UPDATED_CART', payload:addToStorageRes});
 
           }
 
           break;
         case 'REMOVE': // remove cart by id
-          const remove_res = await makeApiRequest(`/remove-cart/${id}`, 'GET');
-          if (remove_res) console.log(remove_res);
+          const remove_res = await removeItem(CartData,id)
+          if (remove_res)
+            dispatch({ type: 'UPDATED_CART', payload: remove_res });
+
           break;
         case 'UPDATE': // update quantity
           const update_res =updateDuplicateItem(CartData,id,updateCase) ;
-          if (update_res) console.log(update_res);
+          if (update_res)
+            dispatch({ type: 'UPDATED_CART', payload:update_res });
+
           break;
         case 'REMOVE_CART': //remove all items in cart
           const removeCart_res = await makeApiRequest(`/remove`, 'GET');
@@ -191,7 +197,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
   };
   useEffect(() => {
     fetchData();
-    CartData && dispatch({ type: 'ADDED_TO_CART', payload:CartData});
+    CartData && dispatch({ type: 'UPDATED_CART', payload:CartData});
     if ((!state.marketList.length || !state.productList.length) && !state.dataFetched) {
       if (marketId && marketCity) getMarketId(marketId, 'MARKET_STORES', marketCity);
       if (productId) getMarketId(productId, 'STORES_PRODUCTS');
@@ -205,7 +211,8 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     getMarketId: getMarketId,
     cartUtils: cartUtils,
     cartTotal: state.cartTotal,
-    cartItems:state.cartItems,
+    cartItemsCount: state.cartItemsCount,
+    cartItems: state.cartItems,
     marketList: state.marketList,
     productList: state.productList,
     isLoading: state.isLoading,

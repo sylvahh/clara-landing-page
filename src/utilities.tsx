@@ -89,6 +89,15 @@ export const updateDuplicateItem = (data: any, id: string, updateCase?: string, 
   return updatedItem;
 };
 
+export const removeItem = (data:any, id:string) => {
+  const index = data.findIndex((item: { product_id: string }) => item.product_id === id);
+  if (index !== -1) {
+    data.splice(index, 1);
+    storeItem('cartData', data)
+  }
+  return data
+}
+
 export const addItemToStorage = async (id: string, data: any) => {
 
   const addTocartRes = await makeApiRequest(`/add-to-cart/${id}`, 'GET');
@@ -122,6 +131,18 @@ export const getItem = (id: string) => {
   const getData = sessionStorage.getItem(id);
   if (getData) return JSON.parse(getData);
 };
+
+
+export const numberWithCommas = (num:number) => {
+  return num === undefined ? null : num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+
+
+export const CART_EMPTY = <div className="flex justify-center items-center w-full h-full font-bold text-black-sub text-2xl">
+No item in cart 
+</div>
+
 
 export type Option = {
   id: string;
