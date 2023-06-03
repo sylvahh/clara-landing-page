@@ -9,22 +9,10 @@ import Market from './view/markets/Market';
 import Store from './view/markets/Store';
 import Cart from './view/Cart';
 import { StoreProvider } from './store/StoreProvider';
-// import Cookies from 'js-cookie';
-// import { useCookies } from 'react-cookie';
 import Login from './view/Login';
 
 function App() {
-  // const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-  // const tokenCookie = cookies.find(cookie => cookie.startsWith('1P_JAR='));
-  // const token = tokenCookie ? tokenCookie.split('=')[1] : null;
-  // clara_session
-  // const token = Cookies.get('clara_session');
-  // console.log(token)
-  // const [cookies, setCookie] = useCookies();
 
-  // console.log(cookies)
-  const cookies = document.cookie.split(';');
-  console.log(cookies);
   // const forebiddenpaths = ['/', '/supermarkets', '/localmarkets'];
   return (
     <StoreProvider>

@@ -1,9 +1,8 @@
 import React from 'react';
-import shawarma2 from '../assets/shawarma2.jpeg';
 import { arrowLeft, imageBaseUrl, trash } from '../utilities';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/StoreProvider';
-import {useState, useEffect} from 'react'
+import { useEffect} from 'react'
 
 
 

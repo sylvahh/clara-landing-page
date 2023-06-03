@@ -1,5 +1,6 @@
 import CartDropdown from './CartDropdown';
 import cart from '../assets/icon-cart.svg';
+import { useStore } from '../store/StoreProvider';
 
 type dropdownProps = {
   showCart: boolean;
@@ -8,6 +9,8 @@ type dropdownProps = {
 };
 
 function CartBtn({ showCart, setShowCart, scroll }: dropdownProps) {
+  const {cartItems}= useStore()
+
   return (
     <div className='hidden sm:block'>
       <button
@@ -23,7 +26,7 @@ function CartBtn({ showCart, setShowCart, scroll }: dropdownProps) {
         <span className='sr-only'>Cart</span>
 
         <div className='absolute inline-flex items-center justify-center   w-5 h-5 text-xs font-bold text-white bg-tertiary-100 rounded-full -top-2 -right-2'>
-          0
+          {cartItems}
         </div>
       </button>
       <CartDropdown showCart={showCart} setShowCart={setShowCart} scroll={scroll} />

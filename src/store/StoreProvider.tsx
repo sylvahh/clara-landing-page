@@ -1,17 +1,20 @@
-import React, { useContext, createContext, useReducer, useEffect } from 'react';
+import React, { useContext, createContext, useReducer, useEffect, useState, useCallback } from 'react';
 import { addItemToStorage, getItem, getStoreById, makeApiRequest, storeItem, updateDuplicateItem } from '../utilities';
 
 interface StoreProviderProps {
   children: React.ReactNode;
 }
 
-type StoreAction = { type: any; payload: any };
+type StoreAction = { type: any; payload?: any };
 
 interface IStoreContext {
   localmarket: Array<any>;
   supermarket: Array<any>;
   getMarketId: (id: string, storeCase: string, city?: string) => Promise<void>;
-  cartUtils: (id: string, cartCase: string, updateCase?:string, quantity?: number) => Promise<void>;
+  cartUtils: (id: string, cartCase: string, updateCase?: string, quantity?: number) => Promise<void>;
+  cartTotal: number;
+  cartItems: number;
+
   marketList: any[];
   productList: any[];
   isLoading: boolean;
@@ -23,13 +26,17 @@ const initialState: IStoreContext = {
   localmarket: [],
   supermarket: [],
   getMarketId: async (id, storeCase, city) => {},
-  cartUtils: async (id, cartCase,updateCase, quantity) => {},
+  cartUtils: async (id, cartCase, updateCase, quantity) => { },
+  cartTotal: 0,
+  cartItems:0,
   marketList: [],
   productList: [],
   isLoading: false,
   dataFetched: false,
   login: async (id) => {},
 };
+
+const CartData = getItem('cartData');
 
 const reducer = (state: IStoreContext, action: StoreAction) => {
   switch (action.type) {
@@ -75,10 +82,18 @@ const reducer = (state: IStoreContext, action: StoreAction) => {
     }
     case 'ADDED_TO_CART': {
       const data = action.payload;
+      let cartSum = 0;
+      let quantity= 0
+      data.forEach((item: { subTotal:string, quantity:number }) => {
+        cartSum += Number(item.subTotal)
+        quantity += item.quantity
+      })
+      console.log(cartSum, quantity)
 
       return {
         ...state,
-        // isLoading: false,
+        cartTotal: cartSum,
+        cartItems:quantity
       };
     }
 
@@ -91,6 +106,9 @@ const StoreContext = createContext<IStoreContext>(initialState);
 
 const StoreProvider = ({ children }: StoreProviderProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const CartData = getItem('cartData');
+
 
   const marketId = getItem('MS_id');
   const marketCity = getItem('city');
@@ -135,16 +153,15 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
   };
 
   const cartUtils = async (id: string, cartCase: string, updateCase?:string,) => {
-  const getCartData = sessionStorage.getItem('cartData');
-
     try {
       switch (cartCase) {
         case 'ADD': //add to cart
           
           // populate new cart data to session storage
-          const addToStorageRes = await addItemToStorage(id, getCartData );
+          const addToStorageRes = await addItemToStorage(id, CartData );
           if (addToStorageRes) {
-            console.log('item added')
+            dispatch({ type: 'ADDED_TO_CART', payload:addToStorageRes});
+
           }
 
           break;
@@ -153,7 +170,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
           if (remove_res) console.log(remove_res);
           break;
         case 'UPDATE': // update quantity
-          const update_res =updateDuplicateItem(getCartData,id,updateCase) ;
+          const update_res =updateDuplicateItem(CartData,id,updateCase) ;
           if (update_res) console.log(update_res);
           break;
         case 'REMOVE_CART': //remove all items in cart
@@ -174,7 +191,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
   };
   useEffect(() => {
     fetchData();
-
+    CartData && dispatch({ type: 'ADDED_TO_CART', payload:CartData});
     if ((!state.marketList.length || !state.productList.length) && !state.dataFetched) {
       if (marketId && marketCity) getMarketId(marketId, 'MARKET_STORES', marketCity);
       if (productId) getMarketId(productId, 'STORES_PRODUCTS');
@@ -187,6 +204,8 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     supermarket: state.supermarket,
     getMarketId: getMarketId,
     cartUtils: cartUtils,
+    cartTotal: state.cartTotal,
+    cartItems:state.cartItems,
     marketList: state.marketList,
     productList: state.productList,
     isLoading: state.isLoading,

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { cartPath } from '../utilities'
+import { useStore } from '../store/StoreProvider'
 type MobileViewProps = {
     hasSubNav: boolean
     setShowDrawer: any
@@ -10,6 +11,7 @@ type MobileViewProps = {
 const MobileViewNav = (props: MobileViewProps) => {
   const { hasSubNav, setShowDrawer, showDrawer } = props
   const Navigate = useNavigate()
+  const {cartItems}= useStore()
 
   return (
     <div className={`${!hasSubNav && 'hidden'} w-[100%]   fixed bottom-0 bg-primary z-30`}>
@@ -87,7 +89,7 @@ const MobileViewNav = (props: MobileViewProps) => {
               />
             </svg>
             <div className='absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-black bg-white  rounded-full -top-3 -right-3'>
-              0
+              {cartItems}
             </div>
           </button>
         </div>

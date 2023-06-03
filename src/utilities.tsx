@@ -95,7 +95,7 @@ export const addItemToStorage = async (id: string, data: any) => {
   if (addTocartRes) console.log(addTocartRes);
   const { cart } = addTocartRes.data;
 
-  let cartData: any[] = data ? JSON.parse(data) : [];
+  let cartData: any[] = data ? data : [];
 
   const isDuplicate = cartData.some(
     //checking for duplicate items
@@ -113,7 +113,7 @@ export const addItemToStorage = async (id: string, data: any) => {
   }
 
   sessionStorage.setItem('cartData', JSON.stringify(currentData)); // Store the updated data in session storage
-  return true;
+  return currentData;
 };
 
 export const storeItem = (id: string, data: any) =>
