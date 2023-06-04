@@ -1,6 +1,7 @@
 import CartDropdown from './CartDropdown';
 import cart from '../assets/icon-cart.svg';
 import { useStore } from '../store/StoreProvider';
+import { useNavigate } from 'react-router-dom';
 
 type dropdownProps = {
   showCart: boolean;
@@ -9,16 +10,16 @@ type dropdownProps = {
 };
 
 function CartBtn({ showCart, setShowCart, scroll }: dropdownProps) {
-  const {cartItemsCount}= useStore()
+  const { cartItemsCount } = useStore()
+  const Navigate = useNavigate()
 
   return (
     <div className='hidden sm:block'>
       <button
         onMouseEnter={() => {
           setShowCart(true);
-          console.log('hello');
         }}
-        onClick={() => setShowCart(!showCart)}
+        onClick={() =>{ setShowCart(false); Navigate(window.location.pathname + '/cart')}}
         type='button'
         className='relative inline-flex peer  text-sm font-medium text-center text-white'
       >

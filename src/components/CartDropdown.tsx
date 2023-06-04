@@ -1,5 +1,5 @@
 import React from 'react';
-import { CART_EMPTY, cartPath, imageBaseUrl, numberWithCommas } from '../utilities';
+import { CART_EMPTY, imageBaseUrl, numberWithCommas } from '../utilities';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/StoreProvider';
 
@@ -14,9 +14,9 @@ const {cartItems:CTXitems, cartTotal, cartUtils}= useStore()
   const cartItems = CTXitems.length ? CTXitems.map(({product_id, c_price, p_name, img, quantity, }, idx) => {
    return <div key={idx} className='flex justify-between gap-5 items-start w-full'>
     <img src={imageBaseUrl+img} width={'25%'} alt='' />
-    <div className='flex flex-col'>
+    <div className='flex flex-col text-left'>
        <span className='text-black-sub font-semibold'>{ p_name}</span>
-      <span className=''>
+      <span className='text-black-sub font-medium'>
         {' '}
         {quantity} x <span className='text-tertiary-100 font-semibold'>₦ {numberWithCommas(c_price)}</span>
       </span>
@@ -51,7 +51,7 @@ const {cartItems:CTXitems, cartTotal, cartUtils}= useStore()
         </div>
         <div className='flex justify-between'>
           <button
-            onClick={() => Navigate(cartPath)}
+            onClick={() => Navigate(window.location.pathname + '/cart')}
             className=' px-3 py-2 text-white font-semibold bg-tertiary-100 rounded-md hover:bg-primary transition-all duration-500'
           >
             View Cart{' '}

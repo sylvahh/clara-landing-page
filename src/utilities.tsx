@@ -2,8 +2,6 @@
 
 export const imageBaseUrl = 'https://myclara.com.ng';
 
-export const cartPath = window.location.pathname + '/cart';
-
 export async function makeApiRequest(url: string, method: string, body?: object, token?: string) {
   interface Options extends RequestInit {
     method: string;
@@ -64,61 +62,61 @@ export const getStoreById = async (id: string, storeCase: string) => {
   }
 };
 
-export const updateDuplicateItem = (data: any, id: string, updateCase?: string, quantity?: number) => {
+export const updateDuplicateItem = (data: any, id: string) => {
   let updatedItem: any[] = [];
   let tempStorage: any = null;
   const index = data.findIndex((item: { product_id: string }) => item.product_id === id);
   if (index !== -1) {
     tempStorage = data[index];
     const { c_price } = tempStorage;
-
     data.splice(index, 1);
 
-    if (updateCase === 'INCREMENT') {
-      tempStorage.quantity += quantity || 1;
-    } else {
-      tempStorage.quantity -= quantity || 1;
-    }
-
+    tempStorage.quantity += 1;
     tempStorage.subTotal = Number(c_price) * Number(tempStorage.quantity);
-
     updatedItem = [...data, tempStorage];
-
-    console.log(updatedItem);
   }
   return updatedItem;
 };
 
-export const removeItem = (data:any, id:string) => {
+export const updateItemQuantity = (data: any, id: string, updateCase: string) => {
+  const index = data.findIndex((item: { product_id: string }) => item.product_id === id);
+  if (index !== -1) {
+    if (updateCase === 'INCREMENT') data[index].quantity += 1;
+    else data[index].quantity -= 1;
+  }
+  data[index].subTotal = Number(data[index].c_price) * Number(data[index].quantity);
+  storeItem('cartData', data);
+  return data;
+};
+
+export const removeItem = (data: any, id: string) => {
   const index = data.findIndex((item: { product_id: string }) => item.product_id === id);
   if (index !== -1) {
     data.splice(index, 1);
-    storeItem('cartData', data)
+    storeItem('cartData', data);
   }
-  return data
-}
+  return data;
+};
 
 export const addItemToStorage = async (id: string, data: any) => {
-
-  const addTocartRes = await makeApiRequest(`/add-to-cart/${id}`, 'GET');
-  if (addTocartRes) console.log(addTocartRes);
-  const { cart } = addTocartRes.data;
-
   let cartData: any[] = data ? data : [];
-
-  const isDuplicate = cartData.some(
-    //checking for duplicate items
-    (item: { product_id: string }) => item.product_id === cart.product_id
-  );
-
   let currentData: any[] = [];
+  const addTocartRes = await makeApiRequest(`/add-to-cart/${id}`, 'GET');
+  if (addTocartRes) {
+    const { cart } = addTocartRes.data;
 
-  if (isDuplicate) {
-    console.info('found a duplicate item in the cart updating the item quantity... ');
-    const updatedItem = updateDuplicateItem(cartData, cart.product_id, 'INCREMENT');
-    currentData = [...updatedItem];
-  } else {
-    currentData = [...cartData, { ...cart, subTotal: cart.c_price }];
+    const isDuplicate = cartData.some(
+      //checking for duplicate items
+      (item: { product_id: string }) => item.product_id === cart.product_id
+    );
+
+    if (isDuplicate) {
+      console.info('found a duplicate item in the cart updating the item quantity... ');
+      const updatedItem = updateDuplicateItem(cartData, cart.product_id); //update quantity for exiting quantity
+      currentData = [...updatedItem];
+    } else {
+      currentData = [...cartData, { ...cart, subTotal: cart.c_price }];
+    }
   }
 
   sessionStorage.setItem('cartData', JSON.stringify(currentData)); // Store the updated data in session storage
@@ -132,17 +130,15 @@ export const getItem = (id: string) => {
   if (getData) return JSON.parse(getData);
 };
 
-
-export const numberWithCommas = (num:number) => {
+export const numberWithCommas = (num: number) => {
   return num === undefined ? null : num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-
-
-export const CART_EMPTY = <div className="flex justify-center items-center w-full h-full font-bold text-black-sub text-2xl">
-No item in cart 
-</div>
-
+export const CART_EMPTY = (
+  <div className='flex justify-center items-center w-full h-full font-bold text-black-sub text-2xl'>
+    No item in cart
+  </div>
+);
 
 export type Option = {
   id: string;

@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { cartPath } from '../utilities'
 import { useStore } from '../store/StoreProvider'
 type MobileViewProps = {
     hasSubNav: boolean
@@ -72,7 +71,7 @@ const MobileViewNav = (props: MobileViewProps) => {
           </button>
      
               {/* cart */}
-          <button onClick={()=> Navigate(cartPath)}  className='relative text-black flex items-center  space-x-1  bg-transparent  hover:text-tertiary  transition-all'>
+          <button onClick={()=> Navigate(window.location.pathname + '/cart')}  className='relative text-black flex items-center  space-x-1  bg-transparent  hover:text-tertiary  transition-all'>
             {' '}
             <svg
               xmlns='http://www.w3.org/2000/svg'

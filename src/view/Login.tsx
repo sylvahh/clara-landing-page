@@ -5,7 +5,6 @@ import { useStore } from '../store/StoreProvider';
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { login } = useStore()
 
     const handleLogin = (e:React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -14,7 +13,7 @@ const Login = () => {
             password
         }
         if (email && password) {
-            login(data)
+          
         }
      }
     

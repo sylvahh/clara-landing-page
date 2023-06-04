@@ -1,5 +1,5 @@
-import React, { useContext, createContext, useReducer, useEffect, useState, useCallback } from 'react';
-import { addItemToStorage, getItem, getStoreById, makeApiRequest, removeItem, storeItem, updateDuplicateItem } from '../utilities';
+import React, { useContext, createContext, useReducer, useEffect } from 'react';
+import { addItemToStorage, getItem, getStoreById, makeApiRequest, removeItem, storeItem, updateItemQuantity } from '../utilities';
 
 interface StoreProviderProps {
   children: React.ReactNode;
@@ -19,7 +19,6 @@ interface IStoreContext {
   productList: any[];
   isLoading: boolean;
   dataFetched: boolean;
-  login: (data: object) => Promise<void>;
 }
 
 const initialState: IStoreContext = {
@@ -34,10 +33,8 @@ const initialState: IStoreContext = {
   productList: [],
   isLoading: false,
   dataFetched: false,
-  login: async (id) => {},
 };
 
-const CartData = getItem('cartData');
 
 const reducer = (state: IStoreContext, action: StoreAction) => {
   switch (action.type) {
@@ -89,7 +86,6 @@ const reducer = (state: IStoreContext, action: StoreAction) => {
         cartSum += Number(item.subTotal)
         quantity += item.quantity
       })
-      console.log(cartSum, quantity, data)
 
       return {
         ...state,
@@ -174,14 +170,11 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
 
           break;
         case 'UPDATE': // update quantity
-          const update_res =updateDuplicateItem(CartData,id,updateCase) ;
-          if (update_res)
-            dispatch({ type: 'UPDATED_CART', payload:update_res });
-
-          break;
-        case 'REMOVE_CART': //remove all items in cart
-          const removeCart_res = await makeApiRequest(`/remove`, 'GET');
-          if (removeCart_res) console.log(removeCart_res);
+          if (updateCase) {
+            const update_res = updateItemQuantity(CartData, id, updateCase);
+            if (update_res)
+              dispatch({ type: 'UPDATED_CART', payload: update_res });
+          }
           break;
         default:
       }
@@ -192,7 +185,6 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
   const login = async (data: object) => {
     const res = await makeApiRequest('/login', 'POST', data);
     if (res) {
-      console.log(res);
     }
   };
   useEffect(() => {
@@ -217,7 +209,6 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     productList: state.productList,
     isLoading: state.isLoading,
     dataFetched: state.dataFetched,
-    login: login,
   };
 
   return <StoreContext.Provider value={storeContextValue}>{children}</StoreContext.Provider>;
